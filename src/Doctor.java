@@ -31,18 +31,19 @@ class Doctor {
     private final JLabel yearsOfExperience = Create.label("Years of experience", blue, labelFont, 845, 540);
     private final JLabel degree = Create.label("Degree", blue, labelFont, 909, 648);
 
+    private String[] specialties = { "Dermatology", "Gastroenterology", "General Medicine", "Ophthalmology", "Orthopedics", "Otolaryngology (ENT)", "Pediatrics", "Radiology" };
+    private String[] days = { "Friday", "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday" };
+    private String[] degrees = { "Bachelor", "Master", "Doctoral" };
+
     private JTextField doctorID2 = Create.textField(blue, white, blue, font, 3, 1095, 101, 400, 40);
     private JTextField clinicID2 = Create.textField(blue, white, blue, font, 3, 1095, 209, 400, 40);
     private JTextField nurseID2 = Create.textField(blue, white, blue, font, 3, 1095, 209, 400, 40);
-    private JTextField firstName2 = Create.textField(blue, white, blue, font, 3, 1095, 317, 400, 40);
-    private JTextField lastName2 = Create.textField(blue, white, blue, font, 3, 1095, 425, 400, 40);
-    private String[] specialties = { "Dermatology", "Gastroenterology", "General Medicine", "Ophthalmology", "Orthopedics", "Otolaryngology (ENT)", "Pediatrics", "Radiology" };
     private JSpinner specialization2 = Create.listSpinner(specialties, 1095, 209, 400, 40, font, blue, white, 3);
+    private JTextField firstName2 = Create.textField(blue, white, blue, font, 3, 1095, 317, 400, 40);
     private JSpinner shift2 = Create.spinner(white, blue, font, 1095, 317, 400, 40, 3, 1, 6, 1, 1);
-    private JSpinner yearsOfExperience2 = Create.spinner(white, blue, font, 1095, 533, 400, 40, 3, 0, Integer.MAX_VALUE, 1, 0);
-    private String[] days = { "Friday", "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday" };
     private JComboBox<String> day2 = Create.comboBox(days, white, blue, font, 1095, 425, 400, 40, 3);
-    private String[] degrees = { "Bachelor", "Master", "Doctoral" };
+    private JTextField lastName2 = Create.textField(blue, white, blue, font, 3, 1095, 425, 400, 40);
+    private JSpinner yearsOfExperience2 = Create.spinner(white, blue, font, 1095, 533, 400, 40, 3, 0, Integer.MAX_VALUE, 1, 0);
     private JComboBox<String> degree2 = Create.comboBox(degrees, white, blue, font, 1095, 641, 400, 40, 3);
     private JTextField message = Create.textField(blue, white, white, font, 0, 970, 756, 400, 40);
 
@@ -51,29 +52,25 @@ class Doctor {
     public Doctor(JPanel sidebar, JButton doctor, JButton nurse, JButton patient, JButton exit, JPanel content, Connection connection) {
         content.add(doctorID);
         content.add(doctorID2);
+        content.add(clinicID);
+        content.add(clinicID2);
+        content.add(nurseID);
+        content.add(nurseID2);
         content.add(specialization);
         content.add(specialization2);
         content.add(firstName);
         content.add(firstName2);
-        content.add(lastName);
-        content.add(lastName2);
-        content.add(degree);
-        content.add(degree2);
-        content.add(yearsOfExperience);
-        content.add(yearsOfExperience2);
-        content.add(message);
-        content.add(clinicID);
-        content.add(clinicID2);
         content.add(shift);
         content.add(shift2);
         content.add(day);
         content.add(day2);
-        content.add(nurseID);
-        content.add(nurseID2);
-        content.add(firstName);
-        content.add(firstName2);
         content.add(lastName);
         content.add(lastName2);
+        content.add(yearsOfExperience);
+        content.add(yearsOfExperience2);
+        content.add(degree);
+        content.add(degree2);
+        content.add(message);
         content.add(confirm);
 
         for (Component component : sidebar.getComponents()) {
@@ -198,8 +195,7 @@ class Doctor {
                     }
                     ResultSet resultSet = select.executeQuery();
                     while (resultSet.next()) {
-                        System.out.println(resultSet.getInt(1) + "\n" + resultSet.getString(2) + "\n" + resultSet.getString(3)
-                        + "\n" + resultSet.getString(4) + "\n" + resultSet.getInt(5) + "\n" + resultSet.getString(6));
+                        System.out.println(resultSet.getInt(1) + "\n" + resultSet.getString(2) + "\n" + resultSet.getString(3) + "\n" + resultSet.getString(4) + "\n" + resultSet.getInt(5) + "\n" + resultSet.getString(6));
                     }
                 } catch (SQLException ex) {
                     ex.printStackTrace();
