@@ -28,7 +28,8 @@ public class Create {
         return label;
     }
 
-    public static JTextField textField(Color fg, Color bg, Color borderColor, Font font, int thickness, int x, int y, int width, int height) {
+    public static JTextField textField(Color fg, Color bg, Color borderColor, Font font, int thickness, int x, int y,
+            int width, int height) {
         JTextField textField = new JTextField();
         textField.setHorizontalAlignment(JTextField.CENTER);
         textField.setBackground(bg);
@@ -39,7 +40,8 @@ public class Create {
         return textField;
     }
 
-    public static JButton button(String text, Color bg, Font font, int x, int y, int width, int height, int thickness, java.awt.event.ActionListener action) {
+    public static JButton button(String text, Color bg, Font font, int x, int y, int width, int height, int thickness,
+            java.awt.event.ActionListener action) {
         JButton button = new JButton(text);
         button.setBackground(bg);
         button.setForeground(Color.WHITE);
@@ -54,7 +56,8 @@ public class Create {
         return button;
     }
 
-    public static JComboBox<String> comboBox(String[] items, Color bg, Color fg, Font font, int x, int y, int width, int height, int thickness) {
+    public static JComboBox<String> comboBox(String[] items, Color bg, Color fg, Font font, int x, int y, int width,
+            int height, int thickness) {
         JComboBox<String> comboBox = new JComboBox<>(items);
         comboBox.setFont(font);
         comboBox.setBackground(bg);
@@ -63,7 +66,8 @@ public class Create {
         comboBox.setBorder(BorderFactory.createLineBorder(fg, thickness));
         comboBox.setRenderer(new DefaultListCellRenderer() {
             @Override
-            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
+                    boolean cellHasFocus) {
                 Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
                 if (c instanceof JLabel) {
                     ((JLabel) c).setHorizontalAlignment(SwingConstants.CENTER);
@@ -75,7 +79,8 @@ public class Create {
         return comboBox;
     }
 
-    public static JSpinner spinner(Color bg, Color fg, Font font, int x, int y, int width, int height, int thickness, int min, int max, int step, int value) {
+    public static JSpinner spinner(Color bg, Color fg, Font font, int x, int y, int width, int height, int thickness,
+            int min, int max, int step, int value) {
         SpinnerNumberModel spinnerModel = new SpinnerNumberModel(value, min, max, step);
         JSpinner spinner = new JSpinner(spinnerModel);
         spinner.setFont(font);
@@ -93,7 +98,8 @@ public class Create {
         return spinner;
     }
 
-    public static JSpinner listSpinner(String[] specialties, int x, int y, int width, int height, Font font, Color fg, Color bg, int thickness) {
+    public static JSpinner listSpinner(String[] specialties, int x, int y, int width, int height, Font font, Color fg,
+            Color bg, int thickness) {
         JSpinner listSpinner = new JSpinner(new SpinnerListModel(specialties));
         listSpinner.setBounds(x, y, width, height);
         listSpinner.setFont(font);
