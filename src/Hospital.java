@@ -24,12 +24,12 @@ public class Hospital {
         sidebar.add(doctor);
 
         nurse = Create.button("Nurse", blue, white, 159, 360, e -> {
-            new Nurse();
+            new Nurse(sidebar, doctor, nurse, patient, exit, content, connection);
         });
         sidebar.add(nurse);
 
         patient = Create.button("Patient", blue, white, 148, 540, e -> {
-            new Patient();
+            // new Patient(sidebar, doctor, nurse, patient, exit, content, connection);
         });
         sidebar.add(patient);
 

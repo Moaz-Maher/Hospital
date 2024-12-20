@@ -167,7 +167,7 @@ class Doctor {
                     remove.setInt(1, Integer.parseInt(doctorID2.getText()));
                     remove.executeUpdate();
 
-                    message.setText("The doctor has been removed successfully.");
+                    message.setText("The doctor has been deleted successfully.");
                     message.setForeground(Color.RED);
                     message.setVisible(true);
                 } catch (SQLException ex) {
@@ -311,8 +311,6 @@ class Doctor {
             for (Component component : content.getComponents()) {
                 component.setVisible(false);
             }
-
-            setVisibility(true, doctorID, doctorID2, nurseID, nurseID2, firstName, firstName2, lastName, lastName2, confirm);
 
             removeAllActionListeners(confirm);
 
