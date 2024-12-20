@@ -24,7 +24,6 @@ import java.time.LocalDate;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Font;
 
 class Doctor {
     private void setVisibility(boolean isVisible, Component... components) {
@@ -39,47 +38,45 @@ class Doctor {
         }
     }
 
-    private final Font buttonFont = new Font("Arial", Font.BOLD, 24);
-    private final Font labelFont = new Font("Arial", Font.BOLD, 22);
-    private final Font font = new Font("Arial", Font.BOLD, 14);
-    private final Color blue = new Color(1, 50, 67), gray = new Color(150, 150, 150), white = new Color(242, 242, 242);
+    private final Color blue = new Color(1, 50, 67), white = new Color(242, 242, 242);
 
-    private JButton add = Create.button("Add", blue, buttonFont, 91, 108, 238, 45, Color.WHITE, 3, null);
-    private JButton remove = Create.button("Remove", blue, buttonFont, 91, 216, 238, 45, Color.WHITE, 3, null);
-    private JButton addAppointment = Create.button("Add Appointment", blue, buttonFont, 91, 324, 238, 45, Color.WHITE, 3, null);
-    private JButton makeManager = Create.button("Make Manager", blue, buttonFont, 91, 432, 238, 45, Color.WHITE, 3, null);
-    private JButton select = Create.button("Select", blue, buttonFont, 91, 540, 238, 45, Color.WHITE, 3, null);
-    private JButton superviseNurse = Create.button("Supervise Nurse", blue, buttonFont, 91, 648, 238, 45, Color.WHITE, 3, null);
-    private JButton back = Create.button("Back", gray, buttonFont, 91, 864, 238, 45, Color.WHITE, 3, null);
+    private JButton add = Create.button("Add", blue, white, 170, 108, null);
+    private JButton remove = Create.button("Remove", blue, white, 147, 216, null);
+    private JButton addAppointment = Create.button("Add Appointment", blue, white, 85, 324, null);
+    private JButton makeManager = Create.button("Make Manager", blue, white, 108, 432, null);
+    private JButton select = Create.button("Select", blue, white, 156, 540, null);
+    private JButton superviseNurse = Create.button("Supervise Nurse", blue, white, 97, 648, null);
+    private JButton allDoctors = Create.button("All doctors", blue, white, 127, 756, null);
+    private JButton back = Create.button("Back", blue, white, 167, 972, null);
 
-    private final JLabel doctorID = Create.label("Doctor ID", blue, labelFont, 898, 108);
-    private final JLabel clinicID = Create.label("Clinic ID", blue, labelFont, 904, 216);
-    private final JLabel nurseID = Create.label("Nurse ID", blue, labelFont, 902, 216);
-    private final JLabel specialization = Create.label("Specialization", blue, labelFont, 876, 216);
-    private final JLabel firstName = Create.label("First name", blue, labelFont, 892, 324);
-    private final JLabel shift = Create.label("Shift", blue, labelFont, 922, 324);
-    private final JLabel day = Create.label("Day", blue, labelFont, 926, 432);
-    private final JLabel lastName = Create.label("Last name", blue, labelFont, 893, 432);
-    private final JLabel yearsOfExperience = Create.label("Years of experience", blue, labelFont, 845, 540);
-    private final JLabel degree = Create.label("Degree", blue, labelFont, 909, 648);
+    private final JLabel doctorID = Create.label("Doctor ID", blue, 898, 108);
+    private final JLabel clinicID = Create.label("Clinic ID", blue, 904, 216);
+    private final JLabel nurseID = Create.label("Nurse ID", blue, 902, 216);
+    private final JLabel specialization = Create.label("Specialization", blue, 876, 216);
+    private final JLabel firstName = Create.label("First name", blue, 892, 324);
+    private final JLabel shift = Create.label("Shift", blue, 922, 324);
+    private final JLabel day = Create.label("Day", blue, 926, 432);
+    private final JLabel lastName = Create.label("Last name", blue, 893, 432);
+    private final JLabel yearsOfExperience = Create.label("Years of experience", blue, 845, 540);
+    private final JLabel degree = Create.label("Degree", blue, 909, 648);
 
     private String[] specialties = { "Dermatology", "Gastroenterology", "General Medicine", "Ophthalmology", "Orthopedics", "Otolaryngology (ENT)", "Pediatrics", "Radiology" };
     private String[] days = { "Friday", "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday" };
     private String[] degrees = { "Bachelor", "Master", "Doctoral" };
 
-    private JTextField doctorID2 = Create.textField(blue, white, blue, font, 3, 1095, 101, 400, 40);
-    private JTextField clinicID2 = Create.textField(blue, white, blue, font, 3, 1095, 209, 400, 40);
-    private JTextField nurseID2 = Create.textField(blue, white, blue, font, 3, 1095, 209, 400, 40);
-    private JSpinner specialization2 = Create.spinner(new SpinnerListModel(specialties), 1095, 209, 400, 40, font, blue, white, 3);
-    private JTextField firstName2 = Create.textField(blue, white, blue, font, 3, 1095, 317, 400, 40);
-    private JSpinner shift2 = Create.spinner(new SpinnerNumberModel(1, 1, 6, 1), 1095, 317, 400, 40, font, blue, white, 3);
-    private JComboBox<String> day2 = Create.comboBox(days, white, blue, font, 1095, 425, 400, 40, 3);
-    private JTextField lastName2 = Create.textField(blue, white, blue, font, 3, 1095, 425, 400, 40);
-    private JSpinner yearsOfExperience2 = Create.spinner(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1), 1095, 533, 400, 40, font, blue, white, 3);
-    private JComboBox<String> degree2 = Create.comboBox(degrees, white, blue, font, 1095, 641, 400, 40, 3);
-    private JTextField message = Create.textField(blue, white, white, font, 0, 970, 756, 400, 40);
+    private JTextField doctorID2 = Create.textField(blue, white, blue, 1095, 101, 400, 40);
+    private JTextField clinicID2 = Create.textField(blue, white, blue, 1095, 209, 400, 40);
+    private JTextField nurseID2 = Create.textField(blue, white, blue, 1095, 209, 400, 40);
+    private JSpinner specialization2 = Create.spinner(new SpinnerListModel(specialties), 1095, 209, 400, 40, blue, white);
+    private JTextField firstName2 = Create.textField(blue, white, blue, 1095, 317, 400, 40);
+    private JSpinner shift2 = Create.spinner(new SpinnerNumberModel(1, 1, 6, 1), 1095, 317, 400, 40, blue, white);
+    private JComboBox<String> day2 = Create.comboBox(days, white, blue, 1095, 425, 400, 40);
+    private JTextField lastName2 = Create.textField(blue, white, blue, 1095, 425, 400, 40);
+    private JSpinner yearsOfExperience2 = Create.spinner(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1), 1095, 533, 400, 40, blue, white);
+    private JComboBox<String> degree2 = Create.comboBox(degrees, white, blue, 1095, 641, 400, 40);
+    private JTextField message = Create.textField(blue, white, white, 970, 756, 400, 40);
 
-    private JButton confirm = Create.button("Add", blue, labelFont, 1051, 864, 238, 45, gray, 3, null);
+    private JButton confirm = Create.button("Confirm", white, blue, 1107, 864, null);
 
     public Doctor(JPanel sidebar, JButton doctor, JButton nurse, JButton patient, JButton exit, JPanel content, Connection connection) {
         content.add(doctorID);
@@ -111,7 +108,7 @@ class Doctor {
         sidebar.add(makeManager);
         sidebar.add(select);
         sidebar.add(superviseNurse);
-        back.setBorder(null);
+        sidebar.add(allDoctors);
         sidebar.add(back);
 
         for (Component component : sidebar.getComponents()) {
@@ -122,48 +119,7 @@ class Doctor {
             component.setVisible(false);
         }
 
-        setVisibility(true, add, remove, addAppointment, makeManager, select, superviseNurse, back);
-
-        try {
-            String query = "SELECT * FROM Doctor";
-            PreparedStatement select = connection.prepareStatement(query);
-            ResultSet result = select.executeQuery();
-            DefaultTableModel model = new DefaultTableModel();
-
-            JLabel doctors = Create.label("Doctors", blue, new Font("Arial", Font.BOLD, 22), 1129, 36);
-            content.add(doctors);
-
-            JTable table = new JTable(model);
-            ResultSetMetaData metaData = result.getMetaData();
-            int columnCount = metaData.getColumnCount();
-            for (int i = 1; i <= columnCount; i++) {
-                model.addColumn(metaData.getColumnName(i));
-            }
-            while (result.next()) {
-                Object[] rowData = new Object[columnCount];
-                for (int i = 1; i <= columnCount; i++) {
-                    rowData[i - 1] = result.getObject(i);
-                }
-                model.addRow(rowData);
-            }
-            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-            centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-            for (int i = 0; i < table.getColumnCount(); i++) {
-                table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-            }
-            JScrollPane tableScrollPane = new JScrollPane(table);
-            tableScrollPane.setBounds(420, 108, 1500, 972);
-            content.add(tableScrollPane);
-
-            for (Component component : content.getComponents()) {
-                component.setVisible(false);
-            }
-
-            doctors.setVisible(true);
-            tableScrollPane.setVisible(true);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+        setVisibility(true, add, remove, addAppointment, makeManager, select, superviseNurse, allDoctors, back);
 
         add.addActionListener(e -> {
             for (Component component : content.getComponents()) {
@@ -349,6 +305,53 @@ class Doctor {
                     ex.printStackTrace();
                 }
             });
+        });
+
+        allDoctors.addActionListener(e -> {
+            for (Component component : content.getComponents()) {
+                component.setVisible(false);
+            }
+
+            setVisibility(true, doctorID, doctorID2, nurseID, nurseID2, firstName, firstName2, lastName, lastName2, confirm);
+
+            removeAllActionListeners(confirm);
+
+            try {
+                String query = "SELECT * FROM Doctor";
+                PreparedStatement select = connection.prepareStatement(query);
+                ResultSet result = select.executeQuery();
+                DefaultTableModel model = new DefaultTableModel();
+
+                JTable table = new JTable(model);
+                ResultSetMetaData metaData = result.getMetaData();
+                int columnCount = metaData.getColumnCount();
+                for (int i = 1; i <= columnCount; i++) {
+                    model.addColumn(metaData.getColumnName(i));
+                }
+                while (result.next()) {
+                    Object[] rowData = new Object[columnCount];
+                    for (int i = 1; i <= columnCount; i++) {
+                        rowData[i - 1] = result.getObject(i);
+                    }
+                    model.addRow(rowData);
+                }
+                DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+                centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+                for (int i = 0; i < table.getColumnCount(); i++) {
+                    table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+                }
+                JScrollPane tableScrollPane = new JScrollPane(table);
+                tableScrollPane.setBounds(420, 0, 1500, 1080);
+                content.add(tableScrollPane);
+
+                for (Component component : content.getComponents()) {
+                    component.setVisible(false);
+                }
+
+                tableScrollPane.setVisible(true);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         });
 
         back.addActionListener(e -> {
