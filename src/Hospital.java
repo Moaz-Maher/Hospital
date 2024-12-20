@@ -1,9 +1,9 @@
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JButton;
+import java.awt.Color;
+import java.awt.Font;
+
 import java.sql.Connection;
 
 public class Hospital {
@@ -19,25 +19,16 @@ public class Hospital {
         frame.add(content);
         doctor = Create.button("Doctor", blue, buttonFont, 91, 216, 238, 45, Color.WHITE, 3, null);
         doctor.addActionListener(e -> {
-            for (Component component : sidebar.getComponents()) {
-                component.setVisible(false);
-            }
             new Doctor(sidebar, doctor, nurse, patient, exit, content, connection);
         });
         sidebar.add(doctor);
         nurse = Create.button("Nurse", blue, buttonFont, 91, 432, 238, 45, Color.WHITE, 3, null);
         nurse.addActionListener(e -> {
-            for (Component component : sidebar.getComponents()) {
-                component.setVisible(false);
-            }
             new Nurse();
         });
         sidebar.add(nurse);
         patient = Create.button("Patient", blue, buttonFont, 91, 648, 238, 45, Color.WHITE, 3, null);
         patient.addActionListener(e -> {
-            for (Component component : sidebar.getComponents()) {
-                component.setVisible(false);
-            }
             new Patient();
         });
         sidebar.add(patient);

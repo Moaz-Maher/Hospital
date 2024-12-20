@@ -33,6 +33,12 @@ class Doctor {
         }
     }
 
+    private void removeAllActionListeners(JButton button) {
+        for (var listener : button.getActionListeners()) {
+            button.removeActionListener(listener);
+        }
+    }
+
     private final Font buttonFont = new Font("Arial", Font.BOLD, 24);
     private final Font labelFont = new Font("Arial", Font.BOLD, 22);
     private final Font font = new Font("Arial", Font.BOLD, 14);
@@ -46,7 +52,6 @@ class Doctor {
     private JButton superviseNurse = Create.button("Supervise Nurse", blue, buttonFont, 91, 648, 238, 45, Color.WHITE, 3, null);
     private JButton back = Create.button("Back", gray, buttonFont, 91, 864, 238, 45, Color.WHITE, 3, null);
 
-    JLabel doctors = Create.label("Doctors", blue, labelFont, 1129, 36);
     private final JLabel doctorID = Create.label("Doctor ID", blue, labelFont, 898, 108);
     private final JLabel clinicID = Create.label("Clinic ID", blue, labelFont, 904, 216);
     private final JLabel nurseID = Create.label("Nurse ID", blue, labelFont, 902, 216);
@@ -77,7 +82,6 @@ class Doctor {
     private JButton confirm = Create.button("Add", blue, labelFont, 1051, 864, 238, 45, gray, 3, null);
 
     public Doctor(JPanel sidebar, JButton doctor, JButton nurse, JButton patient, JButton exit, JPanel content, Connection connection) {
-        content.add(doctors);
         content.add(doctorID);
         content.add(doctorID2);
         content.add(clinicID);
@@ -101,6 +105,15 @@ class Doctor {
         content.add(message);
         content.add(confirm);
 
+        sidebar.add(add);
+        sidebar.add(remove);
+        sidebar.add(addAppointment);
+        sidebar.add(makeManager);
+        sidebar.add(select);
+        sidebar.add(superviseNurse);
+        back.setBorder(null);
+        sidebar.add(back);
+
         for (Component component : sidebar.getComponents()) {
             component.setVisible(false);
         }
@@ -109,12 +122,57 @@ class Doctor {
             component.setVisible(false);
         }
 
+        setVisibility(true, add, remove, addAppointment, makeManager, select, superviseNurse, back);
+
+        try {
+            String query = "SELECT * FROM Doctor";
+            PreparedStatement select = connection.prepareStatement(query);
+            ResultSet result = select.executeQuery();
+            DefaultTableModel model = new DefaultTableModel();
+
+            JLabel doctors = Create.label("Doctors", blue, new Font("Arial", Font.BOLD, 22), 1129, 36);
+            content.add(doctors);
+
+            JTable table = new JTable(model);
+            ResultSetMetaData metaData = result.getMetaData();
+            int columnCount = metaData.getColumnCount();
+            for (int i = 1; i <= columnCount; i++) {
+                model.addColumn(metaData.getColumnName(i));
+            }
+            while (result.next()) {
+                Object[] rowData = new Object[columnCount];
+                for (int i = 1; i <= columnCount; i++) {
+                    rowData[i - 1] = result.getObject(i);
+                }
+                model.addRow(rowData);
+            }
+            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+            centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+            for (int i = 0; i < table.getColumnCount(); i++) {
+                table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+            }
+            JScrollPane tableScrollPane = new JScrollPane(table);
+            tableScrollPane.setBounds(420, 108, 1500, 972);
+            content.add(tableScrollPane);
+
+            for (Component component : content.getComponents()) {
+                component.setVisible(false);
+            }
+
+            doctors.setVisible(true);
+            tableScrollPane.setVisible(true);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
         add.addActionListener(e -> {
             for (Component component : content.getComponents()) {
                 component.setVisible(false);
             }
 
             setVisibility(true, doctorID, doctorID2, specialization, specialization2, firstName, firstName2, lastName, lastName2, degree, degree2, yearsOfExperience, yearsOfExperience2, confirm);
+
+            removeAllActionListeners(confirm);
 
             confirm.addActionListener(e1 -> {
                 try {
@@ -136,7 +194,6 @@ class Doctor {
                 }
             });
         });
-        sidebar.add(add);
 
         remove.addActionListener(e -> {
             for (Component component : content.getComponents()) {
@@ -144,6 +201,8 @@ class Doctor {
             }
 
             setVisibility(true, doctorID, doctorID2, confirm);
+
+            removeAllActionListeners(confirm);
 
             confirm.addActionListener(e1 -> {
                 try {
@@ -160,7 +219,6 @@ class Doctor {
                 }
             });
         });
-        sidebar.add(remove);
 
         addAppointment.addActionListener(e -> {
             for (Component component : content.getComponents()) {
@@ -168,6 +226,8 @@ class Doctor {
             }
 
             setVisibility(true, doctorID, doctorID2, clinicID, clinicID2, shift, shift2, day, day2, confirm);
+
+            removeAllActionListeners(confirm);
 
             confirm.addActionListener(e1 -> {
                 try {
@@ -187,7 +247,6 @@ class Doctor {
                 }
             });
         });
-        sidebar.add(addAppointment);
 
         makeManager.addActionListener(e -> {
             for (Component component : content.getComponents()) {
@@ -195,6 +254,8 @@ class Doctor {
             }
 
             setVisibility(true, doctorID, doctorID2, specialization, specialization2, confirm);
+
+            removeAllActionListeners(confirm);
 
             confirm.addActionListener(e1 -> {
                 try {
@@ -213,7 +274,6 @@ class Doctor {
                 }
             });
         });
-        sidebar.add(makeManager);
 
         select.addActionListener(e -> {
             for (Component component : content.getComponents()) {
@@ -221,6 +281,8 @@ class Doctor {
             }
 
             setVisibility(true, doctorID, doctorID2, confirm);
+
+            removeAllActionListeners(confirm);
 
             confirm.addActionListener(e1 -> {
                 try {
@@ -260,7 +322,6 @@ class Doctor {
                 }
             });
         });
-        sidebar.add(select);
 
         superviseNurse.addActionListener(e -> {
             for (Component component : content.getComponents()) {
@@ -268,6 +329,8 @@ class Doctor {
             }
 
             setVisibility(true, doctorID, doctorID2, nurseID, nurseID2, firstName, firstName2, lastName, lastName2, confirm);
+
+            removeAllActionListeners(confirm);
 
             confirm.addActionListener(e1 -> {
                 try {
@@ -287,7 +350,6 @@ class Doctor {
                 }
             });
         });
-        sidebar.add(superviseNurse);
 
         back.addActionListener(e -> {
             for (Component component : sidebar.getComponents()) {
@@ -300,43 +362,5 @@ class Doctor {
 
             setVisibility(true, doctor, nurse, patient, exit);
         });
-        back.setBorder(null);
-        sidebar.add(back);
-
-        try {
-            String query = "SELECT * FROM Doctor";
-            PreparedStatement select = connection.prepareStatement(query);
-            ResultSet result = select.executeQuery();
-            DefaultTableModel model = new DefaultTableModel();
-
-            JTable table = new JTable(model);
-            ResultSetMetaData metaData = result.getMetaData();
-            int columnCount = metaData.getColumnCount();
-            for (int i = 1; i <= columnCount; i++) {
-                model.addColumn(metaData.getColumnName(i));
-            }
-            while (result.next()) {
-                Object[] rowData = new Object[columnCount];
-                for (int i = 1; i <= columnCount; i++) {
-                    rowData[i - 1] = result.getObject(i);
-                }
-                model.addRow(rowData);
-            }
-            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-            centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-            for (int i = 0; i < table.getColumnCount(); i++) {
-                table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-            }
-            JScrollPane tableScrollPane = new JScrollPane(table);
-            tableScrollPane.setBounds(420, 108, 1500, 972);
-            content.add(tableScrollPane);
-            for (Component component : content.getComponents()) {
-                component.setVisible(false);
-            }
-
-            setVisibility(true, doctors, tableScrollPane);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
     }
 }
