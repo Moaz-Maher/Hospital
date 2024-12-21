@@ -1,20 +1,23 @@
-import javax.swing.JButton;
-import javax.swing.JLabel;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
+
+import javax.swing.SpinnerListModel;
+import javax.swing.SpinnerNumberModel;
+
+import java.time.LocalDate;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 
 public class Nurse {
     private void setVisibility(boolean isVisible, Component... components) {
@@ -31,12 +34,13 @@ public class Nurse {
 
     private final Color blue = new Color(1, 50, 67), white = new Color(242, 242, 242);
 
-    private JButton add = Create.button("Add nurse", blue, Color.WHITE, 133, 135, null);
-    private JButton delete = Create.button("Delete nurse", blue, Color.WHITE, 118, 270, null);
-    private JButton takeCareOfRoom = Create.button("Take care of room", blue, Color.WHITE, 82, 405, null);
-    private JButton deleteTakeCare = Create.button("Delete take care", blue, Color.WHITE, 93, 540, null);
-    private JButton allNurses = Create.button("All nurses", blue, Color.WHITE, 135, 675, null);
-    private JButton back = Create.button("Back", blue, Color.WHITE, 167, 945, null);
+    private JButton add = Create.button("Add nurse", blue, white, 133, 120, null);
+    private JButton delete = Create.button("Delete nurse", blue, white, 118, 240, null);
+    private JButton takeCareOfRoom = Create.button("Take care of room", blue, white, 82, 360, null);
+    private JButton select = Create.button("Select", blue, white, 156, 480, null);
+    private JButton deleteTakeCare = Create.button("Delete take care", blue, white, 93, 600, null);
+    private JButton allNurses = Create.button("All nurses", blue, white, 135, 720, null);
+    private JButton back = Create.button("Back", blue, white, 167, 960, null);
 
     private final JLabel nurseID = Create.label("Nurse ID", blue, 902, 108);
     private final JLabel firstName = Create.label("First name", blue, 892, 216);
@@ -57,6 +61,7 @@ public class Nurse {
         sidebar.add(add);
         sidebar.add(delete);
         sidebar.add(takeCareOfRoom);
+        sidebar.add(select);
         sidebar.add(deleteTakeCare);
         sidebar.add(allNurses);
         sidebar.add(back);
@@ -82,7 +87,7 @@ public class Nurse {
             component.setVisible(false);
         }
 
-        setVisibility(true, add, delete, takeCareOfRoom, deleteTakeCare, allNurses, back);
+        setVisibility(true, add, delete, takeCareOfRoom, select, deleteTakeCare, allNurses, back);
 
         add.addActionListener(e -> {
             for (Component component : content.getComponents()) {
@@ -162,6 +167,46 @@ public class Nurse {
             });
         });
 
+        select.addActionListener(e -> {
+            for (Component component : content.getComponents()) {
+                component.setVisible(false);
+            }
+
+            setVisibility(true, nurseID, nurseID2, confirm);
+
+            removeAllActionListeners(confirm);
+
+            confirm.addActionListener(e1 -> {
+                for (Component component : content.getComponents()) {
+                    component.setVisible(false);
+                }
+
+                String query;
+                PreparedStatement select;
+                ResultSet result;
+
+                try {
+                    query = "SELECT * FROM Nurse WHERE id = ?";
+                    select = connection.prepareStatement(query);
+                    select.setInt(1, Integer.parseInt(nurseID2.getText()));
+                    result = select.executeQuery();
+                    content.add(Create.table(connection, content, result, query, 420, 90, 270));
+                    query = "SELECT * FROM Take_care WHERE nurse_id = ?";
+                    select = connection.prepareStatement(query);
+                    select.setInt(1, Integer.parseInt(nurseID2.getText()));
+                    result = select.executeQuery();
+                    content.add(Create.table(connection, content, result, query, 420, 450, 270));
+                    query = "SELECT * FROM Operation_help WHERE nurse_id = ?";
+                    select = connection.prepareStatement(query);
+                    select.setInt(1, Integer.parseInt(nurseID2.getText()));
+                    result = select.executeQuery();
+                    content.add(Create.table(connection, content, result, query, 420, 810, 270));
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            });
+        });
+
         deleteTakeCare.addActionListener(e -> {
             for (Component component : content.getComponents()) {
                 component.setVisible(false);
@@ -172,8 +217,8 @@ public class Nurse {
             removeAllActionListeners(confirm);
 
             confirm.addActionListener(e1 -> {
+                String query = "DELETE FROM Take_care WHERE id = ?";
                 try {
-                    String query = "DELETE FROM Take_care WHERE nurse_id = ?";
                     PreparedStatement deleteTakeCare = connection.prepareStatement(query);
                     deleteTakeCare.setInt(1, Integer.parseInt(nurseID2.getText()));
                     deleteTakeCare.executeUpdate();
@@ -192,41 +237,23 @@ public class Nurse {
                 component.setVisible(false);
             }
 
-            removeAllActionListeners(confirm);
+            String query;
+            PreparedStatement select;
+            ResultSet result;
 
             try {
-                String query = "SELECT * FROM Nurse";
-                PreparedStatement select = connection.prepareStatement(query);
-                ResultSet result = select.executeQuery();
-                DefaultTableModel model = new DefaultTableModel();
-
-                JTable table = new JTable(model);
-                ResultSetMetaData metaData = result.getMetaData();
-                int columnCount = metaData.getColumnCount();
-                for (int i = 1; i <= columnCount; i++) {
-                    model.addColumn(metaData.getColumnName(i));
-                }
-                while (result.next()) {
-                    Object[] rowData = new Object[columnCount];
-                    for (int i = 1; i <= columnCount; i++) {
-                        rowData[i - 1] = result.getObject(i);
-                    }
-                    model.addRow(rowData);
-                }
-                DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-                centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-                for (int i = 0; i < table.getColumnCount(); i++) {
-                    table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-                }
-                JScrollPane tableScrollPane = new JScrollPane(table);
-                tableScrollPane.setBounds(420, 0, 1500, 1080);
-                content.add(tableScrollPane);
-
-                for (Component component : content.getComponents()) {
-                    component.setVisible(false);
-                }
-
-                tableScrollPane.setVisible(true);
+                query = "SELECT * FROM Nurse";
+                select = connection.prepareStatement(query);
+                result = select.executeQuery();
+                content.add(Create.table(connection, content, result, query, 420, 90, 270));
+                query = "SELECT * FROM Take_care";
+                select = connection.prepareStatement(query);
+                result = select.executeQuery();
+                content.add(Create.table(connection, content, result, query, 420, 450, 270));
+                query = "SELECT * FROM Operation_help";
+                select = connection.prepareStatement(query);
+                result = select.executeQuery();
+                content.add(Create.table(connection, content, result, query, 420, 810, 270));
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }

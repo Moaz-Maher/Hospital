@@ -2,9 +2,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 
 import javax.swing.JPanel;
 import javax.swing.JButton;
@@ -13,13 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.SpinnerListModel;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -218,38 +211,35 @@ public class Patient {
             removeAllActionListeners(confirm);
 
             confirm.addActionListener(e1 -> {
-                try {
-                    String query = "SELECT * FROM Patient WHERE id = ?";
-                    PreparedStatement select = connection.prepareStatement(query);
-                    select.setInt(1, Integer.parseInt(patientID2.getText()));
-                    ResultSet result = select.executeQuery();
-                    DefaultTableModel model = new DefaultTableModel();
+                for (Component component : content.getComponents()) {
+                    component.setVisible(false);
+                }
 
-                    JTable table = new JTable(model);
-                    ResultSetMetaData metaData = result.getMetaData();
-                    int columnCount = metaData.getColumnCount();
-                    for (int i = 1; i <= columnCount; i++) {
-                        model.addColumn(metaData.getColumnName(i));
-                    }
-                    while (result.next()) {
-                        Object[] rowData = new Object[columnCount];
-                        for (int i = 1; i <= columnCount; i++) {
-                            rowData[i - 1] = result.getObject(i);
-                        }
-                        model.addRow(rowData);
-                    }
-                    DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-                    centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-                    for (int i = 0; i < table.getColumnCount(); i++) {
-                        table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-                    }
-                    JScrollPane tableScrollPane = new JScrollPane(table);
-                    tableScrollPane.setBounds(420, 0, 1500, 1080);
-                    content.add(tableScrollPane);
-                    for (Component component : content.getComponents()) {
-                        component.setVisible(false);
-                    }
-                    tableScrollPane.setVisible(true);
+                String query;
+                PreparedStatement select;
+                ResultSet result;
+
+                try {
+                    query = "SELECT * FROM Patient WHERE id = ?";
+                    select = connection.prepareStatement(query);
+                    select.setInt(1, Integer.parseInt(patientID2.getText()));
+                    result = select.executeQuery();
+                    content.add(Create.table(connection, content, result, query, 420, 54, 216));
+                    query = "SELECT * FROM Examine WHERE patient_id = ?";
+                    select = connection.prepareStatement(query);
+                    select.setInt(1, Integer.parseInt(patientID2.getText()));
+                    result = select.executeQuery();
+                    content.add(Create.table(connection, content, result, query, 420, 324, 216));
+                    query = "SELECT * FROM Patient_Phone WHERE patient_id = ?";
+                    select = connection.prepareStatement(query);
+                    select.setInt(1, Integer.parseInt(patientID2.getText()));
+                    result = select.executeQuery();
+                    content.add(Create.table(connection, content, result, query, 420, 594, 216));
+                    query = "SELECT * FROM (SELECT * FROM Perform_operation WHERE patient_id = ?) tmp INNER JOIN Operation_details d ON d.id = tmp.operation_id";
+                    select = connection.prepareStatement(query);
+                    select.setInt(1, Integer.parseInt(patientID2.getText()));
+                    result = select.executeQuery();
+                    content.add(Create.table(connection, content, result, query, 420, 864, 216));
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
@@ -261,41 +251,27 @@ public class Patient {
                 component.setVisible(false);
             }
 
-            removeAllActionListeners(confirm);
+            String query;
+            PreparedStatement select;
+            ResultSet result;
 
             try {
-                String query = "SELECT * FROM Patient";
-                PreparedStatement select = connection.prepareStatement(query);
-                ResultSet result = select.executeQuery();
-                DefaultTableModel model = new DefaultTableModel();
-
-                JTable table = new JTable(model);
-                ResultSetMetaData metaData = result.getMetaData();
-                int columnCount = metaData.getColumnCount();
-                for (int i = 1; i <= columnCount; i++) {
-                    model.addColumn(metaData.getColumnName(i));
-                }
-                while (result.next()) {
-                    Object[] rowData = new Object[columnCount];
-                    for (int i = 1; i <= columnCount; i++) {
-                        rowData[i - 1] = result.getObject(i);
-                    }
-                    model.addRow(rowData);
-                }
-                DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-                centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-                for (int i = 0; i < table.getColumnCount(); i++) {
-                    table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-                }
-                JScrollPane tableScrollPane = new JScrollPane(table);
-                tableScrollPane.setBounds(420, 0, 1500, 1080);
-                content.add(tableScrollPane);
-
-                for (Component component : content.getComponents()) {
-                    component.setVisible(false);
-                }
-
-                tableScrollPane.setVisible(true);
+                query = "SELECT * FROM Patient";
+                select = connection.prepareStatement(query);
+                result = select.executeQuery();
+                content.add(Create.table(connection, content, result, query, 420, 54, 216));
+                query = "SELECT * FROM Examine";
+                select = connection.prepareStatement(query);
+                result = select.executeQuery();
+                content.add(Create.table(connection, content, result, query, 420, 324, 216));
+                query = "SELECT * FROM Patient_Phone";
+                select = connection.prepareStatement(query);
+                result = select.executeQuery();
+                content.add(Create.table(connection, content, result, query, 420, 594, 216));
+                query = "SELECT * FROM (SELECT * FROM Perform_operation) tmp INNER JOIN Operation_details d ON d.id = tmp.operation_id";
+                select = connection.prepareStatement(query);
+                result = select.executeQuery();
+                content.add(Create.table(connection, content, result, query, 420, 864, 216));
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }

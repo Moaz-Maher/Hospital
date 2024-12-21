@@ -155,18 +155,6 @@ CREATE TABLE Take_care
 );
 
 -- 3.
-INSERT INTO Specialization
-    (name, start_date)
-VALUES
-    ('Otolaryngology (ENT)', '2024-01-01'),
-    ('General Medicine', '2024-01-01'),
-    ('Ophthalmology', '2024-01-01'),
-    ('Pediatrics', '2024-01-01'),
-    ('Gastroenterology', '2024-01-01'),
-    ('Orthopedics', '2024-01-01'),
-    ('Dermatology', '2024-01-01');
-
--- 4.
 ALTER TABLE Doctor 
 ADD FOREIGN KEY (specialization) REFERENCES Specialization(name);
 

@@ -1,15 +1,19 @@
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SpinnerListModel;
 
@@ -17,6 +21,11 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 
 public class Create {
     public static JFrame frame(int width, int height) {
@@ -110,5 +119,31 @@ public class Create {
         textField.setBorder(BorderFactory.createLineBorder(borderColor, 2));
         textField.setBounds(x, y, width, height);
         return textField;
+    }
+
+    public static JScrollPane table(Connection connection, JPanel content, ResultSet result, String query, int x, int y, int height) throws SQLException {
+        DefaultTableModel model = new DefaultTableModel();
+
+        JTable table = new JTable(model);
+        ResultSetMetaData metaData = result.getMetaData();
+        int columnCount = metaData.getColumnCount();
+        for (int i = 1; i <= columnCount; i++) {
+            model.addColumn(metaData.getColumnName(i));
+        }
+        while (result.next()) {
+            Object[] rowData = new Object[columnCount];
+            for (int i = 1; i <= columnCount; i++) {
+                rowData[i - 1] = result.getObject(i);
+            }
+            model.addRow(rowData);
+        }
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+        JScrollPane tableScrollPane = new JScrollPane(table);
+        tableScrollPane.setBounds(x, y, 1500, height);
+        return tableScrollPane;
     }
 }
