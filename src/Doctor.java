@@ -41,7 +41,7 @@ class Doctor {
     private final Color blue = new Color(1, 50, 67), white = new Color(242, 242, 242);
 
     private JButton add = Create.button("Add", blue, white, 170, 108, null);
-    private JButton remove = Create.button("Remove", blue, white, 147, 216, null);
+    private JButton delete = Create.button("Remove", blue, white, 147, 216, null);
     private JButton addAppointment = Create.button("Add Appointment", blue, white, 85, 324, null);
     private JButton makeManager = Create.button("Make Manager", blue, white, 108, 432, null);
     private JButton select = Create.button("Select", blue, white, 156, 540, null);
@@ -79,6 +79,15 @@ class Doctor {
     private JButton confirm = Create.button("Confirm", white, blue, 1107, 864, null);
 
     public Doctor(JPanel sidebar, JButton doctor, JButton nurse, JButton patient, JButton exit, JPanel content, Connection connection) {
+        sidebar.add(add);
+        sidebar.add(delete);
+        sidebar.add(addAppointment);
+        sidebar.add(makeManager);
+        sidebar.add(select);
+        sidebar.add(superviseNurse);
+        sidebar.add(allDoctors);
+        sidebar.add(back);
+
         content.add(doctorID);
         content.add(doctorID2);
         content.add(clinicID);
@@ -102,15 +111,6 @@ class Doctor {
         content.add(message);
         content.add(confirm);
 
-        sidebar.add(add);
-        sidebar.add(remove);
-        sidebar.add(addAppointment);
-        sidebar.add(makeManager);
-        sidebar.add(select);
-        sidebar.add(superviseNurse);
-        sidebar.add(allDoctors);
-        sidebar.add(back);
-
         for (Component component : sidebar.getComponents()) {
             component.setVisible(false);
         }
@@ -119,7 +119,7 @@ class Doctor {
             component.setVisible(false);
         }
 
-        setVisibility(true, add, remove, addAppointment, makeManager, select, superviseNurse, allDoctors, back);
+        setVisibility(true, add, delete, addAppointment, makeManager, select, superviseNurse, allDoctors, back);
 
         add.addActionListener(e -> {
             for (Component component : content.getComponents()) {
@@ -151,7 +151,7 @@ class Doctor {
             });
         });
 
-        remove.addActionListener(e -> {
+        delete.addActionListener(e -> {
             for (Component component : content.getComponents()) {
                 component.setVisible(false);
             }

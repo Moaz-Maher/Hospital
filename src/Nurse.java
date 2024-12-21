@@ -54,6 +54,13 @@ public class Nurse {
     private JButton confirm = Create.button("Confirm", white, blue, 1107, 864, null);
 
     public Nurse(JPanel sidebar, JButton doctor, JButton nurse, JButton patient, JButton exit, JPanel content, Connection connection) {
+        sidebar.add(add);
+        sidebar.add(delete);
+        sidebar.add(takeCareOfRoom);
+        sidebar.add(deleteTakeCare);
+        sidebar.add(allNurses);
+        sidebar.add(back);
+
         content.add(firstName);
         content.add(firstName2);
         content.add(lastName);
@@ -66,13 +73,6 @@ public class Nurse {
         content.add(supervisorID2);
         content.add(message);
         content.add(confirm);
-
-        sidebar.add(add);
-        sidebar.add(delete);
-        sidebar.add(takeCareOfRoom);
-        sidebar.add(deleteTakeCare);
-        sidebar.add(allNurses);
-        sidebar.add(back);
 
         for (Component component : sidebar.getComponents()) {
             component.setVisible(false);
@@ -152,13 +152,10 @@ public class Nurse {
                     PreparedStatement takeCareOfRoom = connection.prepareStatement(query);
                     takeCareOfRoom.setInt(1, Integer.parseInt(nurseID2.getText()));
                     takeCareOfRoom.setInt(2, Integer.parseInt(roomID2.getText()));
-                    int rowsInserted1 = takeCareOfRoom.executeUpdate();
-                    if (rowsInserted1 > 0) {
-                        message.setText("A new patient stay was inserted successfully!");
-                        message.setForeground(Color.GREEN);
-                        message.setVisible(true);
-
-                    }
+                    takeCareOfRoom.executeUpdate();
+                    message.setText("A new patient stay was inserted successfully!");
+                    message.setForeground(Color.GREEN);
+                    message.setVisible(true);
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
