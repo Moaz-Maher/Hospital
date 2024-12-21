@@ -41,7 +41,7 @@ public class Patient {
     private JButton examine = Create.button("Examine", blue, white, 145, 491, null);
     private JButton operation = Create.button("Operation", blue, white, 134, 589, null);
     private JButton patientToRoom = Create.button("Add patient to room", blue, white, 64, 687, null);
-    private JButton deleteFromRoom = Create.button("Delete patient fromo room", blue, white, 27, 785, null);
+    private JButton deleteFromRoom = Create.button("Delete patient from room", blue, white, 34, 785, null);
     private JButton back = Create.button("Back", blue, white, 167, 982, null);
 
     private final JLabel patientID = Create.label("Patient ID", blue, 892, 77);
@@ -318,7 +318,7 @@ public class Patient {
                 try {
                     String query = "INSERT INTO Operation_details (description,date,clinic_id) VALUES (?, ?, ?)";
                     PreparedStatement add = connection.prepareStatement(query);
-                    add.setString(1, describition.getText());
+                    add.setString(1, describition2.getText());
                     add.setDate(2, Date.valueOf(LocalDate.now()));
                     add.setInt(3, Integer.parseInt(clinicID2.getText()));
                     add.executeUpdate();
@@ -356,8 +356,11 @@ public class Patient {
 
             confirm.addActionListener(e1 -> {
                 try {
-                    String query = "";
+                    String query = "INSERT INTO patient_stay (patient_id,room_id,entry) VALUES (?,?, ?)";
                     PreparedStatement add = connection.prepareStatement(query);
+                    add.setInt(1, Integer.parseInt(patientID2.getText()));
+                    add.setInt(2, Integer.parseInt(roomID2.getText()));
+                    add.setDate(3, Date.valueOf(LocalDate.now()));
                     add.executeUpdate();
 
                     message.setText("The patient has been added successfully.");

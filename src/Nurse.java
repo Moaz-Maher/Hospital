@@ -57,7 +57,7 @@ public class Nurse {
 
     private JButton confirm = Create.button("Confirm", white, blue, 1107, 864, null);
 
-    public Nurse(JPanel sidebar, JButton doctor, JButton nurse, JButton patient,JButton manager, JButton exit, JPanel content, Connection connection) {
+    public Nurse(JPanel sidebar, JButton doctor, JButton nurse, JButton patient, JButton manager, JButton exit, JPanel content, Connection connection) {
         sidebar.add(add);
         sidebar.add(delete);
         sidebar.add(takeCareOfRoom);
@@ -217,7 +217,7 @@ public class Nurse {
             removeAllActionListeners(confirm);
 
             confirm.addActionListener(e1 -> {
-                String query = "DELETE FROM Take_care WHERE id = ?";
+                String query = "DELETE FROM Take_care WHERE nurse_id = ?";
                 try {
                     PreparedStatement deleteTakeCare = connection.prepareStatement(query);
                     deleteTakeCare.setInt(1, Integer.parseInt(nurseID2.getText()));
@@ -268,7 +268,7 @@ public class Nurse {
                 component.setVisible(false);
             }
 
-            setVisibility(true, doctor, nurse, patient,manager, exit);
+            setVisibility(true, doctor, nurse, patient, manager, exit);
         });
     }
 }
