@@ -39,15 +39,15 @@ public class Nurse {
     private JButton back = Create.button("Back", blue, Color.WHITE, 167, 945, null);
 
     private final JLabel nurseID = Create.label("Nurse ID", blue, 902, 108);
-    private final JLabel firstName = Create.label("First name", blue, 892, 324);
-    private final JLabel lastName = Create.label("Last name", blue, 894, 216);
+    private final JLabel firstName = Create.label("First name", blue, 892, 216);
     private final JLabel roomID = Create.label("Room ID", blue, 902, 216);
+    private final JLabel lastName = Create.label("Last name", blue, 894, 324);
     private final JLabel supervisorID = Create.label("Supervisor ID", blue, 879, 432);
 
     private JTextField nurseID2 = Create.textField(blue, white, blue, 1095, 101, 400, 40);
-    private JTextField firstName2 = Create.textField(blue, white, blue, 1095, 317, 400, 40);
-    private JTextField lastName2 = Create.textField(blue, white, blue, 1095, 209, 400, 40);
+    private JTextField firstName2 = Create.textField(blue, white, blue, 1095, 209, 400, 40);
     private JTextField roomID2 = Create.textField(blue, white, blue, 1095, 209, 400, 40);
+    private JTextField lastName2 = Create.textField(blue, white, blue, 1095, 317, 400, 40);
     private JTextField supervisorID2 = Create.textField(blue, white, blue, 1095, 425, 400, 40);
     private JTextField message = Create.textField(blue, white, white, 970, 756, 400, 40);
 

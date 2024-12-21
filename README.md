@@ -40,3 +40,9 @@
 1. Open SQL script.
 2. Highlight each part of the script.
 3. Right-click and select **Execute**.
+
+## 5. Change Screen Scale
+
+### Steps:
+1. Right click on desktop -> Select **Display settings**
+2. Set **scale** to **100%**

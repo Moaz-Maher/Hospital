@@ -153,8 +153,7 @@ public class Patient {
                 component.setVisible(false);
             }
 
-            setVisibility(true, firstName, firstName2, lastName, lastName2, patientID, patientID2, email, email2, gender, gender2, country, country2, city, city2, dateOfBirth, dateOfBirth2, streetNumber, streetNumber2,
-                    buildingNumber, buildingNumber2, confirm);
+            setVisibility(true, firstName, firstName2, lastName, lastName2, patientID, patientID2, email, email2, gender, gender2, country, country2, city, city2, dateOfBirth, dateOfBirth2, streetNumber, streetNumber2, buildingNumber, buildingNumber2, confirm);
 
             removeAllActionListeners(confirm);
 
