@@ -19,6 +19,20 @@ import java.awt.Color;
 import java.awt.Component;
 
 public class Manager {
-    public Manager(JPanel sidebar, JButton doctor, JButton nurse, JButton patient, JButton exit, JPanel content, Connection connection) {
+    private void setVisibility(boolean isVisible, Component... components) {
+        for (Component component : components) {
+            component.setVisible(isVisible);
+        }
+    }
+
+    private void removeAllActionListeners(JButton button) {
+        for (var listener : button.getActionListeners()) {
+            button.removeActionListener(listener);
+        }
+    }
+
+    private final Color blue = new Color(1, 50, 67), white = new Color(242, 242, 242);
+
+    public Manager(JPanel sidebar, JButton doctor, JButton nurse, JButton patient, JButton manager, JButton exit, JPanel content, Connection connection) {
     }
 }

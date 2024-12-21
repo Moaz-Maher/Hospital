@@ -83,7 +83,7 @@ public class Patient {
 
     private JButton confirm = Create.button("Confirm", white, blue, 1107, 926, null);
 
-    public Patient(JPanel sidebar, JButton doctor, JButton nurse, JButton patient, JButton exit, JPanel content, Connection connection) {
+    public Patient(JPanel sidebar, JButton doctor, JButton nurse, JButton patient, JButton manager, JButton exit, JPanel content, Connection connection) {
         sidebar.add(add);
         sidebar.add(delete);
         sidebar.add(select);
@@ -404,7 +404,7 @@ public class Patient {
                 component.setVisible(false);
             }
 
-            setVisibility(true, doctor, nurse, patient, exit);
+            setVisibility(true, doctor, nurse, patient, manager, exit);
         });
     }
 }

@@ -19,22 +19,22 @@ public class Hospital {
         frame.add(content);
 
         doctor = Create.button("Doctor", blue, white, 152, 154, e -> {
-            new Doctor(sidebar, doctor, nurse, patient, exit, content, connection);
+            new Doctor(sidebar, doctor, nurse, patient, manager, exit, content, connection);
         });
         sidebar.add(doctor);
 
         nurse = Create.button("Nurse", blue, white, 159, 309, e -> {
-            new Nurse(sidebar, doctor, nurse, patient, exit, content, connection);
+            new Nurse(sidebar, doctor, nurse, patient, manager, exit, content, connection);
         });
         sidebar.add(nurse);
 
         patient = Create.button("Patient", blue, white, 148, 463, e -> {
-            new Patient(sidebar, doctor, nurse, patient, exit, content, connection);
+            new Patient(sidebar, doctor, nurse, patient, manager, exit, content, connection);
         });
         sidebar.add(patient);
 
         manager = Create.button("Manager", blue, white, 148, 617, e -> {
-            new Manager(sidebar, doctor, nurse, patient, exit, content, connection);
+            new Manager(sidebar, doctor, nurse, patient, manager, exit, content, connection);
         });
         sidebar.add(manager);
 

@@ -33,18 +33,16 @@ class Doctor {
 
     private final Color blue = new Color(1, 50, 67), white = new Color(242, 242, 242);
 
-    private JButton add = Create.button("Add", blue, white, 170, 108, null);
-    private JButton delete = Create.button("Remove", blue, white, 147, 216, null);
-    private JButton addAppointment = Create.button("Add Appointment", blue, white, 85, 324, null);
-    private JButton makeManager = Create.button("Make Manager", blue, white, 108, 432, null);
-    private JButton select = Create.button("Select", blue, white, 156, 540, null);
-    private JButton superviseNurse = Create.button("Supervise Nurse", blue, white, 97, 648, null);
-    private JButton allDoctors = Create.button("All doctors", blue, white, 127, 756, null);
-    private JButton back = Create.button("Back", blue, white, 167, 972, null);
+    private JButton add = Create.button("Add", blue, white, 170, 120, null);
+    private JButton delete = Create.button("Remove", blue, white, 147, 240, null);
+    private JButton addAppointment = Create.button("Add Appointment", blue, white, 85, 360, null);
+    private JButton makeManager = Create.button("Make Manager", blue, white, 108, 480, null);
+    private JButton select = Create.button("Select", blue, white, 156, 600, null);
+    private JButton allDoctors = Create.button("All doctors", blue, white, 127, 720, null);
+    private JButton back = Create.button("Back", blue, white, 167, 960, null);
 
     private final JLabel doctorID = Create.label("Doctor ID", blue, 898, 108);
     private final JLabel clinicID = Create.label("Clinic ID", blue, 904, 216);
-    private final JLabel nurseID = Create.label("Nurse ID", blue, 902, 216);
     private final JLabel specialization = Create.label("Specialization", blue, 876, 216);
     private final JLabel firstName = Create.label("First name", blue, 892, 324);
     private final JLabel shift = Create.label("Shift", blue, 922, 324);
@@ -53,13 +51,12 @@ class Doctor {
     private final JLabel yearsOfExperience = Create.label("Graduation year", blue, 865, 540);
     private final JLabel degree = Create.label("Degree", blue, 909, 648);
 
-    private String[] specialties = { "Dermatology", "Gastroenterology", "General Medicine", "Ophthalmology", "Orthopedics", "Otolaryngology (ENT)", "Pediatrics", "Radiology" };
+    private String[] specialties = { "Dermatology", "Gastroenterology", "General Medicine", "Ophthalmology", "Orthopedics", "Pediatrics", "Radiology" };
     private String[] days = { "Friday", "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday" };
     private String[] degrees = { "Bachelor", "Master", "Doctoral" };
 
     private JTextField doctorID2 = Create.textField(blue, white, blue, 1095, 101, 400, 40);
     private JTextField clinicID2 = Create.textField(blue, white, blue, 1095, 209, 400, 40);
-    private JTextField nurseID2 = Create.textField(blue, white, blue, 1095, 209, 400, 40);
     private JSpinner specialization2 = Create.spinner(new SpinnerListModel(specialties), 1095, 209, 400, 40, blue, white);
     private JTextField firstName2 = Create.textField(blue, white, blue, 1095, 317, 400, 40);
     private JSpinner shift2 = Create.spinner(new SpinnerNumberModel(1, 1, 6, 1), 1095, 317, 400, 40, blue, white);
@@ -71,13 +68,12 @@ class Doctor {
 
     private JButton confirm = Create.button("Confirm", white, blue, 1107, 864, null);
 
-    public Doctor(JPanel sidebar, JButton doctor, JButton nurse, JButton patient, JButton exit, JPanel content, Connection connection) {
+    public Doctor(JPanel sidebar, JButton doctor, JButton nurse, JButton patient, JButton manager, JButton exit, JPanel content, Connection connection) {
         sidebar.add(add);
         sidebar.add(delete);
         sidebar.add(addAppointment);
         sidebar.add(makeManager);
         sidebar.add(select);
-        sidebar.add(superviseNurse);
         sidebar.add(allDoctors);
         sidebar.add(back);
 
@@ -85,8 +81,6 @@ class Doctor {
         content.add(doctorID2);
         content.add(clinicID);
         content.add(clinicID2);
-        content.add(nurseID);
-        content.add(nurseID2);
         content.add(specialization);
         content.add(specialization2);
         content.add(firstName);
@@ -112,7 +106,7 @@ class Doctor {
             component.setVisible(false);
         }
 
-        setVisibility(true, add, delete, addAppointment, makeManager, select, superviseNurse, allDoctors, back);
+        setVisibility(true, add, delete, addAppointment, makeManager, select, allDoctors, back);
 
         add.addActionListener(e -> {
             for (Component component : content.getComponents()) {
@@ -268,34 +262,6 @@ class Doctor {
             });
         });
 
-        superviseNurse.addActionListener(e -> {
-            for (Component component : content.getComponents()) {
-                component.setVisible(false);
-            }
-
-            setVisibility(true, doctorID, doctorID2, nurseID, nurseID2, firstName, firstName2, lastName, lastName2, confirm);
-
-            removeAllActionListeners(confirm);
-
-            confirm.addActionListener(e1 -> {
-                try {
-                    String query = "INSERT INTO Nurse (id, first_name, last_name, supervizor_id) VALUES (?, ?, ?, ?)";
-                    PreparedStatement superviseNurse = connection.prepareStatement(query);
-                    superviseNurse.setInt(1, Integer.parseInt(nurseID2.getText()));
-                    superviseNurse.setString(2, firstName2.getText());
-                    superviseNurse.setString(3, lastName2.getText());
-                    superviseNurse.setInt(4, Integer.parseInt(doctorID2.getText()));
-                    superviseNurse.executeUpdate();
-
-                    message.setText("The nurse has been supervised successfully.");
-                    message.setForeground(Color.GREEN);
-                    message.setVisible(true);
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
-            });
-        });
-
         allDoctors.addActionListener(e -> {
             for (Component component : content.getComponents()) {
                 component.setVisible(false);
@@ -336,7 +302,7 @@ class Doctor {
                 component.setVisible(false);
             }
 
-            setVisibility(true, doctor, nurse, patient, exit);
+            setVisibility(true, doctor, nurse, patient, manager, exit);
         });
     }
 }
