@@ -72,7 +72,6 @@ CREATE TABLE Appointment
     clinic_id INT NOT NULL,
     PRIMARY KEY (doctor_id, day, shift_number),
     FOREIGN KEY (doctor_id) REFERENCES  Doctor(id) ON DELETE CASCADE,
-    -- *********
     CHECK (shift_number BETWEEN 1 AND 6),
     CHECK (day IN ('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'))
 );

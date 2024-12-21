@@ -135,6 +135,7 @@ public class Patient {
         content.add(nurseID2);
         content.add(roomID);
         content.add(roomID2);
+        message.setBorder(null);
         content.add(message);
         content.add(confirm);
 
@@ -161,8 +162,7 @@ public class Patient {
                 try {
                     String query = "INSERT INTO Patient (id, first_name, last_name, gender,date_of_birth,city,country,street_number,building_number,email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                     PreparedStatement add = connection.prepareStatement(query);
-                    add.setInt(1, Integer.parseInt(patientID.getText()));
-
+                    add.setInt(1, Integer.parseInt(patientID2.getText()));
                     add.setString(2, firstName2.getText());
                     add.setString(3, lastName2.getText());
                     add.setString(4, gender2.getText());

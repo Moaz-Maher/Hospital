@@ -97,7 +97,7 @@ public class Nurse {
                 try {
                     String query = "INSERT INTO Nurse (id, first_name, last_name, supervizor_id) VALUES (?, ?, ?, ?)";
                     PreparedStatement add = connection.prepareStatement(query);
-                    add.setInt(1, Integer.parseInt(firstName2.getText()));
+                    add.setInt(1, Integer.parseInt(nurseID2.getText()));
                     add.setString(2, firstName2.getText());
                     add.setString(3, lastName2.getText());
                     add.setInt(4, Integer.parseInt(supervisorID2.getText()));
