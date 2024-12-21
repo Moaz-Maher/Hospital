@@ -57,7 +57,7 @@ class Doctor {
     private final JLabel shift = Create.label("Shift", blue, 922, 324);
     private final JLabel day = Create.label("Day", blue, 926, 432);
     private final JLabel lastName = Create.label("Last name", blue, 893, 432);
-    private final JLabel yearsOfExperience = Create.label("Years of experience", blue, 845, 540);
+    private final JLabel yearsOfExperience = Create.label("Graduation year", blue, 865, 540);
     private final JLabel degree = Create.label("Degree", blue, 909, 648);
 
     private String[] specialties = { "Dermatology", "Gastroenterology", "General Medicine", "Ophthalmology", "Orthopedics", "Otolaryngology (ENT)", "Pediatrics", "Radiology" };
@@ -72,7 +72,7 @@ class Doctor {
     private JSpinner shift2 = Create.spinner(new SpinnerNumberModel(1, 1, 6, 1), 1095, 317, 400, 40, blue, white);
     private JComboBox<String> day2 = Create.comboBox(days, white, blue, 1095, 425, 400, 40);
     private JTextField lastName2 = Create.textField(blue, white, blue, 1095, 425, 400, 40);
-    private JSpinner yearsOfExperience2 = Create.spinner(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1), 1095, 533, 400, 40, blue, white);
+    private JSpinner gradYear = Create.spinner(new SpinnerNumberModel(1994, LocalDate.now().getYear() - 60, LocalDate.now().getYear(), 1), 1095, 533, 400, 40, blue, white);
     private JComboBox<String> degree2 = Create.comboBox(degrees, white, blue, 1095, 641, 400, 40);
     private JTextField message = Create.textField(blue, white, white, 970, 756, 400, 40);
 
@@ -105,7 +105,7 @@ class Doctor {
         content.add(lastName);
         content.add(lastName2);
         content.add(yearsOfExperience);
-        content.add(yearsOfExperience2);
+        content.add(gradYear);
         content.add(degree);
         content.add(degree2);
         content.add(message);
@@ -126,19 +126,19 @@ class Doctor {
                 component.setVisible(false);
             }
 
-            setVisibility(true, doctorID, doctorID2, specialization, specialization2, firstName, firstName2, lastName, lastName2, degree, degree2, yearsOfExperience, yearsOfExperience2, confirm);
+            setVisibility(true, doctorID, doctorID2, specialization, specialization2, firstName, firstName2, lastName, lastName2, degree, degree2, yearsOfExperience, gradYear, confirm);
 
             removeAllActionListeners(confirm);
 
             confirm.addActionListener(e1 -> {
                 try {
-                    String query = "INSERT INTO Doctor (id, first_name, last_name, degree, years_of_exp, specialization) VALUES (?, ?, ?, ?, ?, ?)";
+                    String query = "INSERT INTO Doctor (id, first_name, last_name, degree, grad_year, specialization) VALUES (?, ?, ?, ?, ?, ?)";
                     PreparedStatement add = connection.prepareStatement(query);
                     add.setInt(1, Integer.parseInt(doctorID2.getText()));
                     add.setString(2, firstName2.getText());
                     add.setString(3, lastName2.getText());
                     add.setString(4, (String) degree2.getSelectedItem());
-                    add.setInt(5, (int) yearsOfExperience2.getValue());
+                    add.setInt(5, (int) gradYear.getValue());
                     add.setString(6, (String) specialization2.getValue());
                     add.executeUpdate();
 
@@ -215,11 +215,10 @@ class Doctor {
 
             confirm.addActionListener(e1 -> {
                 try {
-                    String query = "INSERT INTO Specialization (name, start_date, manager_id) VALUES (?, ?, ?)";
+                    String query = "INSERT INTO Manage (doctor_id, specialization) VALUES (?, ?)";
                     PreparedStatement makeManager = connection.prepareStatement(query);
-                    makeManager.setString(1, (String) specialization2.getValue());
-                    makeManager.setDate(2, Date.valueOf(LocalDate.now()));
-                    makeManager.setInt(3, Integer.parseInt(doctorID2.getText()));
+                    makeManager.setInt(1, Integer.parseInt(doctorID2.getText()));
+                    makeManager.setString(2, (String) specialization2.getValue());
                     makeManager.executeUpdate();
 
                     message.setText("The manager has been added successfully.");

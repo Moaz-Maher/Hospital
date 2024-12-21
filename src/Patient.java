@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 
 import javax.swing.JPanel;
 import javax.swing.JButton;
@@ -21,7 +22,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import java.time.LocalDate;
-
+import java.time.format.DateTimeFormatter;
 import java.awt.Color;
 import java.awt.Component;
 
@@ -85,7 +86,6 @@ public class Patient {
     private JTextField dateOfBirth2 = Create.textField(blue, white, blue, 1095, 610, 400, 40);
     private JTextField streetNumber2 = Create.textField(blue, white, blue, 1095, 687, 400, 40);
     private JTextField buildingNumber2 = Create.textField(blue, white, blue, 1095, 764, 400, 40);
-
     private JTextField message = Create.textField(blue, white, blue, 970, 849, 400, 40);
 
     private JButton confirm = Create.button("Confirm", white, blue, 1107, 926, null);
@@ -166,7 +166,7 @@ public class Patient {
                     add.setString(2, firstName2.getText());
                     add.setString(3, lastName2.getText());
                     add.setString(4, gender2.getText());
-                    // add.setDate(5, (Date) dateOfBirth2.getText());
+                    add.setDate(5, Date.valueOf(LocalDate.parse(dateOfBirth2.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
                     add.setString(6, city2.getText());
                     add.setString(7, country2.getText());
                     add.setInt(8, Integer.parseInt(streetNumber2.getText()));
