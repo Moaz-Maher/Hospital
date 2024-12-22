@@ -27,19 +27,21 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 public class Create {
-    public static JFrame frame(int width, int height) {
+    private final static Color blue = new Color(1, 50, 67), white = new Color(242, 242, 242);
+
+    public static JFrame frame() {
         JFrame frame = new JFrame();
-        frame.setSize(width, height);
+        frame.setSize(1920, 1080);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setUndecorated(true);
         return frame;
     }
 
-    public static JPanel panel(Color bg, int x, int y, int width, int height) {
+    public static JPanel panel(Color bg, int x, int width) {
         JPanel panel = new JPanel(null);
         panel.setBackground(bg);
-        panel.setBounds(x, y, width, height);
+        panel.setBounds(x, 0, width, 1080);
         return panel;
     }
 
@@ -62,13 +64,13 @@ public class Create {
         return button;
     }
 
-    public static JComboBox<String> comboBox(String[] items, Color bg, Color fg, int x, int y, int width, int height) {
+    public static JComboBox<String> comboBox(String[] items, int x, int y) {
         JComboBox<String> comboBox = new JComboBox<>(items);
         comboBox.setFont(new Font("MV Boli", Font.BOLD, 16));
-        comboBox.setBackground(bg);
-        comboBox.setForeground(fg);
-        comboBox.setBounds(x, y, width, height);
-        comboBox.setBorder(BorderFactory.createLineBorder(fg, 1));
+        comboBox.setBackground(white);
+        comboBox.setForeground(blue);
+        comboBox.setBounds(x, y, 400, 40);
+        comboBox.setBorder(BorderFactory.createLineBorder(new Color(1, 50, 67), 1));
         comboBox.setRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
@@ -83,9 +85,9 @@ public class Create {
         return comboBox;
     }
 
-    public static JLabel label(String text, Color fg, int x, int y) {
+    public static JLabel label(String text, int x, int y) {
         JLabel label = new JLabel(text);
-        label.setForeground(fg);
+        label.setForeground(new Color(1, 50, 67));
         label.setFont(new Font("MV Boli", Font.BOLD, 20));
         int width = (int) label.getPreferredSize().getWidth();
         width += (width % 2);
@@ -93,30 +95,30 @@ public class Create {
         return label;
     }
 
-    public static JSpinner spinner(Object model, int x, int y, int width, int height, Color fg, Color bg) {
+    public static JSpinner spinner(Object model, int x, int y) {
         JSpinner spinner = new JSpinner(model instanceof SpinnerNumberModel ? (SpinnerNumberModel) model : (SpinnerListModel) model);
 
         spinner.setFont(new Font("MV Boli", Font.BOLD, 16));
-        spinner.setBounds(x, y, width, height);
-        spinner.setBorder(BorderFactory.createLineBorder(fg, 2));
+        spinner.setBounds(x, y, 400, 40);
+        spinner.setBorder(BorderFactory.createLineBorder(new Color(1, 50, 67), 2));
 
         JTextField textField = ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField();
         textField.setHorizontalAlignment(JTextField.CENTER);
         textField.setEditable(false);
-        textField.setBackground(bg);
-        textField.setForeground(fg);
+        textField.setBackground(white);
+        textField.setForeground(new Color(1, 50, 67));
 
         return spinner;
     }
 
-    public static JTextField textField(Color fg, Color bg, Color borderColor, int x, int y, int width, int height) {
+    public static JTextField textField(int x, int y) {
         JTextField textField = new JTextField();
         textField.setHorizontalAlignment(JTextField.CENTER);
-        textField.setBackground(bg);
-        textField.setForeground(fg);
+        textField.setBackground(white);
+        textField.setForeground(new Color(1, 50, 67));
         textField.setFont(new Font("MV Boli", Font.BOLD, 16));
-        textField.setBorder(BorderFactory.createLineBorder(borderColor, 2));
-        textField.setBounds(x, y, width, height);
+        textField.setBorder(BorderFactory.createLineBorder(new Color(1, 50, 67), 2));
+        textField.setBounds(x, y, 400, 40);
         return textField;
     }
 

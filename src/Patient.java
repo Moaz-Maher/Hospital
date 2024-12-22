@@ -11,7 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
-import javax.swing.SpinnerListModel;
 import javax.swing.SpinnerNumberModel;
 
 import java.time.LocalDate;
@@ -44,42 +43,43 @@ public class Patient {
     private JButton deleteFromRoom = Create.button("Delete patient from room", blue, white, 34, 785, null);
     private JButton back = Create.button("Back", blue, white, 167, 982, null);
 
-    private final JLabel patientID = Create.label("Patient ID", blue, 892, 77);
-    private final JLabel doctorID = Create.label("Doctor ID", blue, 896, 154);
-    private final JLabel firstName = Create.label("First name", blue, 892, 154);
-    private final JLabel roomID = Create.label("Room ID", blue, 902, 154);
-    private final JLabel diagnosis = Create.label("Diagnosis", blue, 902, 231);
-    private final JLabel lastName = Create.label("Last name", blue, 894, 231);
-    private final JLabel operationID = Create.label("Operation ID", blue, 881, 231);
-    private final JLabel clinicID = Create.label("Clinic ID", blue, 905, 309);
-    private final JLabel email = Create.label("Email", blue, 920, 309);
-    private final JLabel describition = Create.label("Describition", blue, 887, 385);
-    private final JLabel gender = Create.label("Gender", blue, 911, 385);
-    private final JLabel country = Create.label("Country", blue, 906, 463);
-    private final JLabel nurseID = Create.label("Nurse ID", blue, 902, 463);
-    private final JLabel city = Create.label("City", blue, 925, 540);
-    private final JLabel dateOfBirth = Create.label("Date of birth", blue, 877, 617);
-    private final JLabel streetNumber = Create.label("Street number", blue, 871, 694);
-    private final JLabel buildingNumber = Create.label("Buildingn umber", blue, 867, 771);
+    private final JLabel patientID = Create.label("Patient ID", 892, 77);
+    private final JLabel doctorID = Create.label("Doctor ID", 896, 154);
+    private final JLabel firstName = Create.label("First name", 892, 154);
+    private final JLabel roomID = Create.label("Room ID", 902, 154);
+    private final JLabel diagnosis = Create.label("Diagnosis", 902, 231);
+    private final JLabel lastName = Create.label("Last name", 894, 231);
+    private final JLabel operationID = Create.label("Operation ID", 881, 231);
+    private final JLabel clinicID = Create.label("Clinic ID", 905, 309);
+    private final JLabel email = Create.label("Email", 920, 309);
+    private final JLabel describition = Create.label("Describition", 887, 385);
+    private final JLabel country = Create.label("Country", 906, 385);
+    private final JLabel nurseID = Create.label("Nurse ID", 902, 463);
+    private final JLabel city = Create.label("City", 925, 463);
+    private final JLabel dateOfBirth = Create.label("Date of birth", 877, 540);//
+    private final JLabel streetNumber = Create.label("Street number", 871, 617);
+    private final JLabel buildingNumber = Create.label("Buildingn umber", 867, 694);
+    private final JLabel gender = Create.label("Gender", 911, 771);
 
-    private JTextField patientID2 = Create.textField(blue, white, blue, 1095, 70, 400, 40);
-    private JTextField doctorID2 = Create.textField(blue, white, blue, 1095, 147, 400, 40);
-    private JTextField firstName2 = Create.textField(blue, white, blue, 1095, 147, 400, 40);
-    private JTextField roomID2 = Create.textField(blue, white, blue, 1095, 147, 400, 40);
-    private JTextField diagnosis2 = Create.textField(blue, white, blue, 1095, 224, 400, 40);
-    private JTextField lastName2 = Create.textField(blue, white, blue, 1095, 224, 400, 40);
-    private JTextField operationID2 = Create.textField(blue, white, blue, 1095, 224, 400, 40);
-    private JTextField clinicID2 = Create.textField(blue, white, blue, 1095, 302, 400, 40);
-    private JTextField email2 = Create.textField(blue, white, blue, 1095, 302, 400, 40);
-    private JTextField describition2 = Create.textField(blue, white, blue, 1095, 378, 400, 40);
-    private JTextField gender2 = Create.textField(blue, white, blue, 1095, 378, 400, 40);
-    private JTextField country2 = Create.textField(blue, white, blue, 1095, 456, 400, 40);
-    private JTextField nurseID2 = Create.textField(blue, white, blue, 1095, 456, 400, 40);
-    private JTextField city2 = Create.textField(blue, white, blue, 1095, 533, 400, 40);
-    private JTextField dateOfBirth2 = Create.textField(blue, white, blue, 1095, 610, 400, 40);
-    private JTextField streetNumber2 = Create.textField(blue, white, blue, 1095, 687, 400, 40);
-    private JTextField buildingNumber2 = Create.textField(blue, white, blue, 1095, 764, 400, 40);
-    private JTextField message = Create.textField(blue, white, blue, 970, 849, 400, 40);
+    private JTextField patientID2 = Create.textField(1095, 70);
+    private JTextField doctorID2 = Create.textField(1095, 147);
+    private JTextField firstName2 = Create.textField(1095, 147);
+    private JSpinner roomID2 = Create.spinner(new SpinnerNumberModel(0, 0, 9, 1), 1095, 147);
+    private JTextField diagnosis2 = Create.textField(1095, 224);
+    private JTextField lastName2 = Create.textField(1095, 224);
+    private JTextField operationID2 = Create.textField(1095, 224);
+    private JSpinner clinicID2 = Create.spinner(new SpinnerNumberModel(0, 0, 9, 1), 1095, 302);
+    private JTextField email2 = Create.textField(1095, 302);
+    private JTextField describition2 = Create.textField(1095, 378);
+    private JTextField country2 = Create.textField(1095, 378);
+    private JTextField nurseID2 = Create.textField(1095, 456);
+    private JTextField city2 = Create.textField(1095, 456);
+    private JTextField dateOfBirth2 = Create.textField(1095, 533);
+    private JTextField streetNumber2 = Create.textField(1095, 610);
+    private JTextField buildingNumber2 = Create.textField(1095, 687);
+    String[] genders = { "Male", "Female" };
+    private JComboBox<String> gender2 = Create.comboBox(genders, 1095, 764);
+    private JTextField message = Create.textField(970, 849);
 
     private JButton confirm = Create.button("Confirm", white, blue, 1107, 926, null);
 
@@ -158,7 +158,7 @@ public class Patient {
                     add.setInt(1, Integer.parseInt(patientID2.getText()));
                     add.setString(2, firstName2.getText());
                     add.setString(3, lastName2.getText());
-                    add.setString(4, gender2.getText());
+                    add.setString(4, (String) gender2.getSelectedItem());
                     add.setDate(5, Date.valueOf(LocalDate.parse(dateOfBirth2.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
                     add.setString(6, city2.getText());
                     add.setString(7, country2.getText());
@@ -320,7 +320,7 @@ public class Patient {
                     PreparedStatement add = connection.prepareStatement(query);
                     add.setString(1, describition2.getText());
                     add.setDate(2, Date.valueOf(LocalDate.now()));
-                    add.setInt(3, Integer.parseInt(clinicID2.getText()));
+                    add.setInt(3, (int) clinicID2.getValue());
                     add.executeUpdate();
 
                     String query2 = "INSERT INTO Operation_help (nurse_id,operation_id) VALUES (?,?)";
@@ -359,7 +359,7 @@ public class Patient {
                     String query = "INSERT INTO patient_stay (patient_id,room_id,entry) VALUES (?,?, ?)";
                     PreparedStatement add = connection.prepareStatement(query);
                     add.setInt(1, Integer.parseInt(patientID2.getText()));
-                    add.setInt(2, Integer.parseInt(roomID2.getText()));
+                    add.setInt(2, (int) roomID2.getValue());
                     add.setDate(3, Date.valueOf(LocalDate.now()));
                     add.executeUpdate();
 

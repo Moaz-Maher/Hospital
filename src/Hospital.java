@@ -4,18 +4,19 @@ import javax.swing.JButton;
 import java.awt.Color;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class Hospital {
     private JButton doctor, nurse, patient, manager, exit;
     private Color blue = new Color(1, 50, 67), white = new Color(242, 242, 242);
 
     public Hospital(Connection connection) {
-        JFrame frame = Create.frame(1920, 1080);
+        JFrame frame = Create.frame();
 
-        JPanel sidebar = Create.panel(blue, 0, 0, 420, 1080);
+        JPanel sidebar = Create.panel(blue, 0, 420);
         frame.add(sidebar);
 
-        JPanel content = Create.panel(white, 420, 0, 1500, 1080);
+        JPanel content = Create.panel(white, 420, 1500);
         frame.add(content);
 
         doctor = Create.button("Doctor", blue, white, 152, 154, e -> {
@@ -38,7 +39,14 @@ public class Hospital {
         });
         sidebar.add(manager);
 
-        exit = Create.button("Exit", blue, white, 169, 926, e -> System.exit(0));
+        exit = Create.button("Exit", blue, white, 169, 926, e -> {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            System.exit(0);
+        });
         sidebar.add(exit);
 
         frame.setVisible(true);

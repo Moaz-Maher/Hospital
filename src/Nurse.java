@@ -1,20 +1,15 @@
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.JPanel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
-import javax.swing.SpinnerListModel;
 import javax.swing.SpinnerNumberModel;
-
-import java.time.LocalDate;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -42,18 +37,18 @@ public class Nurse {
     private JButton allNurses = Create.button("All nurses", blue, white, 135, 720, null);
     private JButton back = Create.button("Back", blue, white, 167, 960, null);
 
-    private final JLabel nurseID = Create.label("Nurse ID", blue, 902, 108);
-    private final JLabel firstName = Create.label("First name", blue, 892, 216);
-    private final JLabel roomID = Create.label("Room ID", blue, 902, 216);
-    private final JLabel lastName = Create.label("Last name", blue, 894, 324);
-    private final JLabel supervisorID = Create.label("Supervisor ID", blue, 879, 432);
+    private final JLabel nurseID = Create.label("Nurse ID", 902, 108);
+    private final JLabel firstName = Create.label("First name", 892, 216);
+    private final JLabel roomID = Create.label("Room ID", 902, 216);
+    private final JLabel lastName = Create.label("Last name", 894, 324);
+    private final JLabel supervisorID = Create.label("Supervisor ID", 879, 432);
 
-    private JTextField nurseID2 = Create.textField(blue, white, blue, 1095, 101, 400, 40);
-    private JTextField firstName2 = Create.textField(blue, white, blue, 1095, 209, 400, 40);
-    private JTextField roomID2 = Create.textField(blue, white, blue, 1095, 209, 400, 40);
-    private JTextField lastName2 = Create.textField(blue, white, blue, 1095, 317, 400, 40);
-    private JTextField supervisorID2 = Create.textField(blue, white, blue, 1095, 425, 400, 40);
-    private JTextField message = Create.textField(blue, white, white, 970, 756, 400, 40);
+    private JTextField nurseID2 = Create.textField(1095, 101);
+    private JTextField firstName2 = Create.textField(1095, 209);
+    private JSpinner roomID2 = Create.spinner(new SpinnerNumberModel(0, 0, 9, 1), 1095, 209);
+    private JTextField lastName2 = Create.textField(1095, 317);
+    private JTextField supervisorID2 = Create.textField(1095, 425);
+    private JTextField message = Create.textField(970, 756);
 
     private JButton confirm = Create.button("Confirm", white, blue, 1107, 864, null);
 
@@ -156,7 +151,7 @@ public class Nurse {
                     String query = "INSERT INTO Take_care (nurse_id,room_id) VALUES (?, ?)";
                     PreparedStatement takeCareOfRoom = connection.prepareStatement(query);
                     takeCareOfRoom.setInt(1, Integer.parseInt(nurseID2.getText()));
-                    takeCareOfRoom.setInt(2, Integer.parseInt(roomID2.getText()));
+                    takeCareOfRoom.setInt(2, (int) roomID2.getValue());
                     takeCareOfRoom.executeUpdate();
                     message.setText("A new patient stay was inserted successfully!");
                     message.setForeground(Color.GREEN);

@@ -36,24 +36,24 @@ public class Manager {
     private JButton addRoom = Create.button("Add room", blue, white, 134, 540, null);
     private JButton back = Create.button("Back", blue, white, 167, 900, null);
 
-    private final JLabel specialization = Create.label("Specialization", blue, 879, 108);
-    private final JLabel clinicID = Create.label("Clinic ID", blue, 905, 108);
-    private final JLabel clinicName = Create.label("clinic name", blue, 892, 216);
-    private final JLabel clinicFloor = Create.label("Floor", blue, 921, 324);
-    private final JLabel clinicSpecialization = Create.label("clinic specialization", blue, 852, 432);
-    private final JLabel roomID = Create.label("Room ID", blue, 902, 108);
-    private final JLabel roomFloor = Create.label("Room floor", blue, 889, 216);
-    private final JLabel roomCapacity = Create.label("Room capacity", blue, 872, 324);
+    private final JLabel specialization = Create.label("Specialization", 879, 108);
+    private final JLabel clinicID = Create.label("Clinic ID", 905, 108);
+    private final JLabel clinicName = Create.label("clinic name", 892, 216);
+    private final JLabel clinicFloor = Create.label("Floor", 921, 324);
+    private final JLabel clinicSpecialization = Create.label("clinic specialization", 852, 432);
+    private final JLabel roomID = Create.label("Room ID", 902, 108);
+    private final JLabel roomFloor = Create.label("Room floor", 889, 216);
+    private final JLabel roomCapacity = Create.label("Room capacity", 872, 324);
 
-    private JTextField specialization2 = Create.textField(blue, white, blue, 1095, 101, 400, 40);
-    private JTextField clinicID2 = Create.textField(blue, white, blue, 1095, 101, 400, 40);
-    private JTextField clinicName2 = Create.textField(blue, white, blue, 1095, 209, 400, 40);
-    private JTextField clinicFloor2 = Create.textField(blue, white, blue, 1095, 317, 400, 40);
-    private JTextField clinicSpecialization2 = Create.textField(blue, white, blue, 1095, 425, 400, 40);
-    private JTextField roomID2 = Create.textField(blue, white, blue, 1095, 101, 400, 40);
-    private JTextField roomFloor2 = Create.textField(blue, white, blue, 1095, 209, 400, 40);
-    private JTextField roomCapacity2 = Create.textField(blue, white, blue, 1095, 317, 400, 40);
-    private JTextField message = Create.textField(blue, white, white, 970, 756, 400, 40);
+    private JTextField specialization2 = Create.textField(1095, 101);
+    private JSpinner clinicID2 = Create.spinner(new SpinnerNumberModel(0, 0, 9, 1), 1095, 101);
+    private JTextField clinicName2 = Create.textField(1095, 209);
+    private JTextField clinicFloor2 = Create.textField(1095, 317);
+    private JTextField clinicSpecialization2 = Create.textField(1095, 425);
+    private JTextField roomID2 = Create.textField(1095, 101);
+    private JSpinner roomFloor2 = Create.spinner(new SpinnerNumberModel(0, 0, 9, 1), 1095, 209);
+    private JTextField roomCapacity2 = Create.textField(1095, 317);
+    private JTextField message = Create.textField(970, 756);
 
     private JButton confirm = Create.button("Confirm", white, blue, 1107, 864, null);
 
@@ -131,7 +131,7 @@ public class Manager {
                 try {
                     String query = "SET IDENTITY_INSERT Clinic ON;" + "INSERT INTO Clinic (id, name, floor, specialization) VALUES (?, ?, ?, ?);" + "SET IDENTITY_INSERT Clinic OFF;";
                     PreparedStatement add = connection.prepareStatement(query);
-                    add.setInt(1, Integer.parseInt(clinicID2.getText()));
+                    add.setInt(1, (int) clinicID2.getValue());
                     add.setString(2, clinicName2.getText());
                     add.setInt(3, Integer.parseInt(clinicFloor2.getText()));
                     add.setString(4, clinicSpecialization2.getText());
@@ -160,7 +160,7 @@ public class Manager {
                     String query = "SET IDENTITY_INSERT Room ON;" + "INSERT INTO Room (id, floor, capacity) VALUES (?, ?, ?);" + "SET IDENTITY_INSERT Room OFF;";
                     PreparedStatement add = connection.prepareStatement(query);
                     add.setInt(1, Integer.parseInt(roomID2.getText()));
-                    add.setInt(2, Integer.parseInt(roomFloor2.getText()));
+                    add.setInt(2, (int) roomFloor2.getValue());
                     add.setInt(3, Integer.parseInt(roomCapacity2.getText()));
                     add.executeUpdate();
 

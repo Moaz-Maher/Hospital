@@ -41,30 +41,30 @@ class Doctor {
     private JButton allDoctors = Create.button("All doctors", blue, white, 127, 720, null);
     private JButton back = Create.button("Back", blue, white, 167, 960, null);
 
-    private final JLabel doctorID = Create.label("Doctor ID", blue, 898, 108);
-    private final JLabel clinicID = Create.label("Clinic ID", blue, 904, 216);
-    private final JLabel specialization = Create.label("Specialization", blue, 876, 216);
-    private final JLabel firstName = Create.label("First name", blue, 892, 324);
-    private final JLabel shift = Create.label("Shift", blue, 922, 324);
-    private final JLabel day = Create.label("Day", blue, 926, 432);
-    private final JLabel lastName = Create.label("Last name", blue, 893, 432);
-    private final JLabel yearsOfExperience = Create.label("Graduation year", blue, 865, 540);
-    private final JLabel degree = Create.label("Degree", blue, 909, 648);
+    private final JLabel doctorID = Create.label("Doctor ID", 898, 108);
+    private final JLabel clinicID = Create.label("Clinic ID", 904, 216);
+    private final JLabel specialization = Create.label("Specialization", 876, 216);
+    private final JLabel firstName = Create.label("First name", 892, 324);
+    private final JLabel shift = Create.label("Shift", 922, 324);
+    private final JLabel day = Create.label("Day", 926, 432);
+    private final JLabel lastName = Create.label("Last name", 893, 432);
+    private final JLabel yearsOfExperience = Create.label("Graduation year", 865, 540);
+    private final JLabel degree = Create.label("Degree", 909, 648);
 
     private String[] specialties = { "Dermatology", "Gastroenterology", "General Medicine", "Ophthalmology", "Orthopedics", "Pediatrics", "Radiology" };
     private String[] days = { "Friday", "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday" };
     private String[] degrees = { "Bachelor", "Master", "Doctoral" };
 
-    private JTextField doctorID2 = Create.textField(blue, white, blue, 1095, 101, 400, 40);
-    private JTextField clinicID2 = Create.textField(blue, white, blue, 1095, 209, 400, 40);
-    private JSpinner specialization2 = Create.spinner(new SpinnerListModel(specialties), 1095, 209, 400, 40, blue, white);
-    private JTextField firstName2 = Create.textField(blue, white, blue, 1095, 317, 400, 40);
-    private JSpinner shift2 = Create.spinner(new SpinnerNumberModel(1, 1, 6, 1), 1095, 317, 400, 40, blue, white);
-    private JComboBox<String> day2 = Create.comboBox(days, white, blue, 1095, 425, 400, 40);
-    private JTextField lastName2 = Create.textField(blue, white, blue, 1095, 425, 400, 40);
-    private JSpinner gradYear = Create.spinner(new SpinnerNumberModel(1994, LocalDate.now().getYear() - 60, LocalDate.now().getYear(), 1), 1095, 533, 400, 40, blue, white);
-    private JComboBox<String> degree2 = Create.comboBox(degrees, white, blue, 1095, 641, 400, 40);
-    private JTextField message = Create.textField(blue, white, white, 970, 756, 400, 40);
+    private JTextField doctorID2 = Create.textField(1095, 101);
+    private JTextField clinicID2 = Create.textField(1095, 209);
+    private JSpinner specialization2 = Create.spinner(new SpinnerListModel(specialties), 1095, 209);
+    private JTextField firstName2 = Create.textField(1095, 317);
+    private JSpinner shift2 = Create.spinner(new SpinnerNumberModel(1, 1, 6, 1), 1095, 317);
+    private JComboBox<String> day2 = Create.comboBox(days, 1095, 425);
+    private JTextField lastName2 = Create.textField(1095, 425);
+    private JSpinner gradYear = Create.spinner(new SpinnerNumberModel(1994, LocalDate.now().getYear() - 60, LocalDate.now().getYear(), 1), 1095, 533);
+    private JComboBox<String> degree2 = Create.comboBox(degrees, 1095, 641);
+    private JTextField message = Create.textField(970, 756);
 
     private JButton confirm = Create.button("Confirm", white, blue, 1107, 864, null);
 
