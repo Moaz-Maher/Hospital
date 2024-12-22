@@ -43,30 +43,30 @@ class Doctor {
 
     private final JLabel doctorID = Create.label("Doctor ID", 898, 108);
     private final JLabel clinicID = Create.label("Clinic ID", 904, 216);
-    private final JLabel specialization = Create.label("Specialization", 876, 216);
+    private final JLabel degree = Create.label("Degree", 909, 216);
     private final JLabel firstName = Create.label("First name", 892, 324);
     private final JLabel shift = Create.label("Shift", 922, 324);
     private final JLabel day = Create.label("Day", 926, 432);
     private final JLabel lastName = Create.label("Last name", 893, 432);
     private final JLabel yearsOfExperience = Create.label("Graduation year", 865, 540);
-    private final JLabel degree = Create.label("Degree", 909, 648);
+    private final JLabel specialization = Create.label("Specialization", 876, 648);
 
     private String[] specialties = { "Dermatology", "Gastroenterology", "General Medicine", "Ophthalmology", "Orthopedics", "Pediatrics", "Radiology" };
     private String[] days = { "Friday", "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday" };
-    private String[] degrees = { "Bachelor", "Master", "Doctoral" };
+    private String[] degrees = { "Doctoral", "Master", "Bachelor" };
 
     private JTextField doctorID2 = Create.textField(1095, 101);
-    private JTextField clinicID2 = Create.textField(1095, 209);
-    private JSpinner specialization2 = Create.spinner(new SpinnerListModel(specialties), 1095, 209);
+    private JSpinner clinicID2 = Create.spinner(new SpinnerNumberModel(0, 0, 9, 1), 1095, 209);
+    private JSpinner degree2 = Create.spinner(new SpinnerListModel(degrees), 1095, 209);
     private JTextField firstName2 = Create.textField(1095, 317);
     private JSpinner shift2 = Create.spinner(new SpinnerNumberModel(1, 1, 6, 1), 1095, 317);
     private JComboBox<String> day2 = Create.comboBox(days, 1095, 425);
     private JTextField lastName2 = Create.textField(1095, 425);
     private JSpinner gradYear = Create.spinner(new SpinnerNumberModel(1994, LocalDate.now().getYear() - 60, LocalDate.now().getYear(), 1), 1095, 533);
-    private JComboBox<String> degree2 = Create.comboBox(degrees, 1095, 641);
+    private JComboBox<String> specialization2 = Create.comboBox(specialties, 1095, 641);
     private JTextField message = Create.textField(970, 756);
 
-    private JButton confirm = Create.button("Confirm", white, blue, 1107, 864, null);
+    private JButton confirm = Create.button("Confirm", white, blue, 1107, 926, null);
 
     public Doctor(JPanel sidebar, JButton doctor, JButton nurse, JButton patient, JButton manager, JButton exit, JPanel content, Connection connection) {
         sidebar.add(add);
@@ -125,9 +125,9 @@ class Doctor {
                     add.setInt(1, Integer.parseInt(doctorID2.getText()));
                     add.setString(2, firstName2.getText());
                     add.setString(3, lastName2.getText());
-                    add.setString(4, (String) degree2.getSelectedItem());
+                    add.setString(4, (String) degree2.getValue());
                     add.setInt(5, (int) gradYear.getValue());
-                    add.setString(6, (String) specialization2.getValue());
+                    add.setString(6, (String) specialization2.getSelectedItem());
                     add.executeUpdate();
 
                     message.setText("The doctor has been added successfully.");
@@ -180,7 +180,7 @@ class Doctor {
                     addAppointment.setInt(1, Integer.parseInt(doctorID2.getText()));
                     addAppointment.setString(2, (String) day2.getSelectedItem());
                     addAppointment.setInt(3, (int) shift2.getValue());
-                    addAppointment.setInt(4, Integer.parseInt(clinicID2.getText()));
+                    addAppointment.setInt(4, (int) clinicID2.getValue());
                     addAppointment.executeUpdate();
 
                     message.setText("The appointment has been added successfully.");
@@ -197,6 +197,9 @@ class Doctor {
                 component.setVisible(false);
             }
 
+            specialization.setLocation(909, 216);
+            specialization2.setLocation(1095, 209);
+            
             setVisibility(true, doctorID, doctorID2, specialization, specialization2, confirm);
 
             removeAllActionListeners(confirm);
@@ -206,7 +209,7 @@ class Doctor {
                     String query = "INSERT INTO Manage (doctor_id, specialization) VALUES (?, ?)";
                     PreparedStatement makeManager = connection.prepareStatement(query);
                     makeManager.setInt(1, Integer.parseInt(doctorID2.getText()));
-                    makeManager.setString(2, (String) specialization2.getValue());
+                    makeManager.setString(2, (String) specialization2.getSelectedItem());
                     makeManager.executeUpdate();
 
                     message.setText("The manager has been added successfully.");
