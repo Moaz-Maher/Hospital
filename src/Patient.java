@@ -74,7 +74,11 @@ public class Patient {
     private JTextField country2 = Create.textField(1095, 378);
     private JTextField nurseID2 = Create.textField(1095, 456);
     private JTextField city2 = Create.textField(1095, 456);
-    private JTextField dateOfBirth2 = Create.textField(1095, 533);
+    private JTextField year = Create.textField(1095, 533);
+    private final JLabel _1 = Create.label("-", 1270, 540);
+    private JTextField month = Create.textField(1295, 533);
+    private final JLabel _2 = Create.label("-", 1390, 540);
+    private JTextField day = Create.textField(1415, 533);
     private JTextField streetNumber2 = Create.textField(1095, 610);
     private JTextField buildingNumber2 = Create.textField(1095, 687);
     String[] genders = { "Male", "Female" };
@@ -117,7 +121,14 @@ public class Patient {
         content.add(city);
         content.add(city2);
         content.add(dateOfBirth);
-        content.add(dateOfBirth2);
+        year.setSize(160, 40);
+        content.add(year);
+        content.add(_1);
+        month.setSize(80, 40);
+        content.add(month);
+        content.add(_2);
+        day.setSize(80, 40);
+        content.add(day);
         content.add(streetNumber);
         content.add(streetNumber2);
         content.add(buildingNumber);
@@ -147,7 +158,7 @@ public class Patient {
                 component.setVisible(false);
             }
 
-            setVisibility(true, firstName, firstName2, lastName, lastName2, patientID, patientID2, email, email2, gender, gender2, country, country2, city, city2, dateOfBirth, dateOfBirth2, streetNumber, streetNumber2, buildingNumber, buildingNumber2, confirm);
+            setVisibility(true, firstName, firstName2, lastName, lastName2, patientID, patientID2, email, email2, gender, gender2, country, country2, city, city2, dateOfBirth, year, _1, month, _2, day, streetNumber, streetNumber2, buildingNumber, buildingNumber2, confirm);
 
             removeAllActionListeners(confirm);
 
@@ -159,7 +170,7 @@ public class Patient {
                     add.setString(2, firstName2.getText());
                     add.setString(3, lastName2.getText());
                     add.setString(4, (String) gender2.getSelectedItem());
-                    add.setDate(5, Date.valueOf(LocalDate.parse(dateOfBirth2.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
+                    add.setDate(5, Date.valueOf(LocalDate.parse(year.getText() + "-" + month.getText() + "-" + day.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
                     add.setString(6, city2.getText());
                     add.setString(7, country2.getText());
                     add.setInt(8, Integer.parseInt(streetNumber2.getText()));
