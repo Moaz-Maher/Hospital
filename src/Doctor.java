@@ -95,6 +95,7 @@ class Doctor {
         content.add(gradYear);
         content.add(degree);
         content.add(degree2);
+        message.setBorder(null);
         content.add(message);
         content.add(confirm);
 

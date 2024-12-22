@@ -56,7 +56,7 @@ public class Patient {
     private final JLabel country = Create.label("Country", 906, 385);
     private final JLabel nurseID = Create.label("Nurse ID", 902, 463);
     private final JLabel city = Create.label("City", 925, 463);
-    private final JLabel dateOfBirth = Create.label("Date of birth", 877, 540);//
+    private final JLabel dateOfBirth = Create.label("Date of birth", 877, 540);
     private final JLabel streetNumber = Create.label("Street number", 871, 617);
     private final JLabel buildingNumber = Create.label("Buildingn umber", 867, 694);
     private final JLabel gender = Create.label("Gender", 911, 771);
@@ -67,7 +67,7 @@ public class Patient {
     private JSpinner roomID2 = Create.spinner(new SpinnerNumberModel(0, 0, 9, 1), 1095, 147);
     private JTextField diagnosis2 = Create.textField(1095, 224);
     private JTextField lastName2 = Create.textField(1095, 224);
-    private JTextField operationID2 = Create.textField(1095, 224);
+    private JSpinner operationID2 = Create.spinner(new SpinnerNumberModel(0, 0, 9, 1), 1095, 224);
     private JSpinner clinicID2 = Create.spinner(new SpinnerNumberModel(0, 0, 9, 1), 1095, 302);
     private JTextField email2 = Create.textField(1095, 302);
     private JTextField describition2 = Create.textField(1095, 378);
@@ -316,25 +316,26 @@ public class Patient {
 
             confirm.addActionListener(e1 -> {
                 try {
-                    String query = "INSERT INTO Operation_details (description,date,clinic_id) VALUES (?, ?, ?)";
+                    String query = "SET IDENTITY_INSERT Operation_details ON;" + "INSERT INTO Operation_details (id, description,date,clinic_id) VALUES (?, ?, ?, ?);" + "SET IDENTITY_INSERT Operation_details OFF;";
                     PreparedStatement add = connection.prepareStatement(query);
-                    add.setString(1, describition2.getText());
-                    add.setDate(2, Date.valueOf(LocalDate.now()));
-                    add.setInt(3, (int) clinicID2.getValue());
+                    add.setInt(1, (int) operationID2.getValue());
+                    add.setString(2, describition2.getText());
+                    add.setDate(3, Date.valueOf(LocalDate.now()));
+                    add.setInt(4, (int) clinicID2.getValue());
                     add.executeUpdate();
 
-                    String query2 = "INSERT INTO Operation_help (nurse_id,operation_id) VALUES (?,?)";
-                    PreparedStatement add2 = connection.prepareStatement(query2);
-                    add2.setInt(1, Integer.parseInt(nurseID2.getText()));
-                    add2.setInt(2, Integer.parseInt(operationID2.getText()));
-                    add2.executeUpdate();
-
-                    String query3 = "INSERT INTO Perform_operation (doctor_id,operation_id,patient_id) VALUES (?,?, ?)";
-                    PreparedStatement add3 = connection.prepareStatement(query3);
+                    String query2 = "INSERT INTO Perform_operation (doctor_id,operation_id,patient_id) VALUES (?,?, ?)";
+                    PreparedStatement add3 = connection.prepareStatement(query2);
                     add3.setInt(1, Integer.parseInt(doctorID2.getText()));
-                    add3.setInt(2, Integer.parseInt(operationID2.getText()));
+                    add3.setInt(2, (int) operationID2.getValue());
                     add3.setInt(3, Integer.parseInt(patientID2.getText()));
                     add3.executeUpdate();
+
+                    String query3 = "INSERT INTO Operation_help (nurse_id,operation_id) VALUES (?,?)";
+                    PreparedStatement add2 = connection.prepareStatement(query3);
+                    add2.setInt(1, Integer.parseInt(nurseID2.getText()));
+                    add2.setInt(2, (int) operationID2.getValue());
+                    add2.executeUpdate();
 
                     message.setText("The operation has been added successfully.");
                     message.setForeground(Color.GREEN);

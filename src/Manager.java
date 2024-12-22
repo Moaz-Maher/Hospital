@@ -5,11 +5,10 @@ import java.sql.SQLException;
 
 import javax.swing.JPanel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-
-import javax.swing.SpinnerListModel;
 import javax.swing.SpinnerNumberModel;
 
 import java.time.LocalDate;
@@ -45,13 +44,15 @@ public class Manager {
     private final JLabel roomFloor = Create.label("Room floor", 889, 216);
     private final JLabel roomCapacity = Create.label("Room capacity", 872, 324);
 
-    private JTextField specialization2 = Create.textField(1095, 101);
+    private String[] specialties = { "Dermatology", "Gastroenterology", "General Medicine", "Ophthalmology", "Orthopedics", "Pediatrics", "Radiology" };
+
+    private JComboBox<String> specialization2 = Create.comboBox(specialties, 1095, 101);
     private JSpinner clinicID2 = Create.spinner(new SpinnerNumberModel(0, 0, 9, 1), 1095, 101);
     private JTextField clinicName2 = Create.textField(1095, 209);
-    private JTextField clinicFloor2 = Create.textField(1095, 317);
-    private JTextField clinicSpecialization2 = Create.textField(1095, 425);
+    private JSpinner clinicFloor2 = Create.spinner(new SpinnerNumberModel(0, 0, 10, 1), 1095, 317);
+    private JComboBox<String> clinicSpecialization2 = Create.comboBox(specialties, 1095, 425);
     private JTextField roomID2 = Create.textField(1095, 101);
-    private JSpinner roomFloor2 = Create.spinner(new SpinnerNumberModel(0, 0, 9, 1), 1095, 209);
+    private JSpinner roomFloor2 = Create.spinner(new SpinnerNumberModel(0, 0, 10, 1), 1095, 209);
     private JTextField roomCapacity2 = Create.textField(1095, 317);
     private JTextField message = Create.textField(970, 756);
 
@@ -79,6 +80,7 @@ public class Manager {
         content.add(roomFloor2);
         content.add(roomCapacity);
         content.add(roomCapacity2);
+        message.setBorder(null);
         content.add(message);
         content.add(confirm);
 
@@ -105,7 +107,7 @@ public class Manager {
                 try {
                     String query = "INSERT INTO Specialization (name, start_date) VALUES (?, ?)";
                     PreparedStatement add = connection.prepareStatement(query);
-                    add.setString(1, specialization2.getText());
+                    add.setString(1, (String) specialization2.getSelectedItem());
                     add.setDate(2, Date.valueOf(LocalDate.now()));
                     add.executeUpdate();
 
@@ -133,8 +135,8 @@ public class Manager {
                     PreparedStatement add = connection.prepareStatement(query);
                     add.setInt(1, (int) clinicID2.getValue());
                     add.setString(2, clinicName2.getText());
-                    add.setInt(3, Integer.parseInt(clinicFloor2.getText()));
-                    add.setString(4, clinicSpecialization2.getText());
+                    add.setInt(3, (int) clinicFloor2.getValue());
+                    add.setString(4, (String) clinicSpecialization2.getSelectedItem());
                     add.executeUpdate();
 
                     message.setText("The clinic has been added successfully.");

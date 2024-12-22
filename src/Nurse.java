@@ -71,6 +71,7 @@ public class Nurse {
         content.add(nurseID2);
         content.add(supervisorID);
         content.add(supervisorID2);
+        message.setBorder(null);
         content.add(message);
         content.add(confirm);
 
