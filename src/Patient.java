@@ -268,7 +268,7 @@ public class Patient {
                 select = connection.prepareStatement(query);
                 result = select.executeQuery();
                 content.add(Create.table(connection, content, result, query, 420, 594, 216));
-                query = "SELECT * FROM Perform_operation";
+                query = "SELECT * FROM Perform_operation tmp INNER JOIN Operation_details d ON d.id = tmp.operation_id";
                 select = connection.prepareStatement(query);
                 result = select.executeQuery();
                 content.add(Create.table(connection, content, result, query, 420, 864, 216));
