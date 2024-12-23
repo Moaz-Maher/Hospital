@@ -187,12 +187,12 @@ public class Nurse {
                     select.setInt(1, Integer.parseInt(nurseID2.getText()));
                     result = select.executeQuery();
                     content.add(Create.table(connection, content, result, query, 420, 90, 270));
-                    query = "SELECT * FROM Take_care WHERE nurse_id = ?";
+                    query = "SELECT * FROM Take_care WHERE nurse_id = ?"; // nurse_id
                     select = connection.prepareStatement(query);
                     select.setInt(1, Integer.parseInt(nurseID2.getText()));
                     result = select.executeQuery();
                     content.add(Create.table(connection, content, result, query, 420, 450, 270));
-                    query = "SELECT * FROM Operation_help WHERE nurse_id = ?";
+                    query = "SELECT * FROM Operation_help WHERE nurse_id = ?"; // nurse_id
                     select = connection.prepareStatement(query);
                     select.setInt(1, Integer.parseInt(nurseID2.getText()));
                     result = select.executeQuery();
@@ -242,11 +242,11 @@ public class Nurse {
                 select = connection.prepareStatement(query);
                 result = select.executeQuery();
                 content.add(Create.table(connection, content, result, query, 420, 90, 270));
-                query = "SELECT * FROM Take_care";
+                query = "SELECT * FROM Take_care"; // nurse_id
                 select = connection.prepareStatement(query);
                 result = select.executeQuery();
                 content.add(Create.table(connection, content, result, query, 420, 450, 270));
-                query = "SELECT * FROM Operation_help";
+                query = "SELECT * FROM Operation_help"; // nurse_id
                 select = connection.prepareStatement(query);
                 result = select.executeQuery();
                 content.add(Create.table(connection, content, result, query, 420, 810, 270));

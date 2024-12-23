@@ -236,17 +236,17 @@ public class Patient {
                     select.setInt(1, Integer.parseInt(patientID2.getText()));
                     result = select.executeQuery();
                     content.add(Create.table(connection, content, result, query, 420, 54, 216));
-                    query = "SELECT * FROM Examine WHERE patient_id = ?";
+                    query = "SELECT * FROM Examine WHERE patient_id = ?"; // patient_id
                     select = connection.prepareStatement(query);
                     select.setInt(1, Integer.parseInt(patientID2.getText()));
                     result = select.executeQuery();
                     content.add(Create.table(connection, content, result, query, 420, 324, 216));
-                    query = "SELECT * FROM Patient_Phone WHERE patient_id = ?";
+                    query = "SELECT * FROM Patient_Phone WHERE patient_id = ?"; // patient_id
                     select = connection.prepareStatement(query);
                     select.setInt(1, Integer.parseInt(patientID2.getText()));
                     result = select.executeQuery();
                     content.add(Create.table(connection, content, result, query, 420, 594, 216));
-                    query = "SELECT * FROM (SELECT * FROM Perform_operation WHERE patient_id = ?) tmp INNER JOIN Operation_details d ON d.id = tmp.operation_id";
+                    query = "SELECT * FROM (SELECT * FROM Perform_operation WHERE patient_id = ?) tmp INNER JOIN Operation_details d ON d.id = tmp.operation_id"; // patient_id
                     select = connection.prepareStatement(query);
                     select.setInt(1, Integer.parseInt(patientID2.getText()));
                     result = select.executeQuery();
