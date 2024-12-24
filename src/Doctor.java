@@ -199,7 +199,7 @@ class Doctor {
 
             specialization.setLocation(909, 216);
             specialization2.setLocation(1095, 209);
-            
+
             setVisibility(true, doctorID, doctorID2, specialization, specialization2, confirm);
 
             removeAllActionListeners(confirm);
@@ -245,19 +245,27 @@ class Doctor {
                     select.setInt(1, Integer.parseInt(doctorID2.getText()));
                     result = select.executeQuery();
                     content.add(Create.table(connection, content, result, query, 420, 54, 216));
-                    query = "SELECT * FROM Appointment WHERE doctor_id = ?"; // doctor_id
+                    query = "SELECT day, shift_number, clinic_id FROM Appointment WHERE doctor_id = ?";
                     select = connection.prepareStatement(query);
                     select.setInt(1, Integer.parseInt(doctorID2.getText()));
                     result = select.executeQuery();
                     content.add(Create.table(connection, content, result, query, 420, 324, 216));
-                    query = "SELECT * FROM Nurse WHERE supervizor_id = ?"; // supervizor_id
+                    query = "SELECT id, first_name, last_name FROM Nurse WHERE supervizor_id = ?";
                     select = connection.prepareStatement(query);
                     select.setInt(1, Integer.parseInt(doctorID2.getText()));
                     result = select.executeQuery();
                     content.add(Create.table(connection, content, result, query, 420, 594, 216));
-                    query = "SELECT * FROM Manage WHERE doctor_id = ?";
+                    query = "SELECT specialization FROM Doctor WHERE id = ?";
                     select = connection.prepareStatement(query);
                     select.setInt(1, Integer.parseInt(doctorID2.getText()));
+                    result = select.executeQuery();
+                    String specialization = null;
+                    if (result.next()) {
+                        specialization = result.getString("specialization");
+                    }
+                    query = "SELECT doctor_id FROM Manage WHERE specialization = ?";
+                    select = connection.prepareStatement(query);
+                    select.setString(1, specialization);
                     result = select.executeQuery();
                     content.add(Create.table(connection, content, result, query, 420, 864, 216));
                 } catch (SQLException ex) {
@@ -279,17 +287,33 @@ class Doctor {
                 query = "SELECT * FROM Doctor";
                 select = connection.prepareStatement(query);
                 result = select.executeQuery();
+                String doctor_id = null;
+                if (result.next()) {
+                    doctor_id = result.getString("id");
+                }
                 content.add(Create.table(connection, content, result, query, 420, 54, 216));
-                query = "SELECT * FROM Appointment"; // doctor_id
+
+                query = "SELECT day, shift_number, clinic_id FROM Appointment";
                 select = connection.prepareStatement(query);
                 result = select.executeQuery();
                 content.add(Create.table(connection, content, result, query, 420, 324, 216));
-                query = "SELECT * FROM Nurse"; // supervizor_id
+
+                query = "SELECT id, first_name, last_name FROM Nurse";
                 select = connection.prepareStatement(query);
                 result = select.executeQuery();
                 content.add(Create.table(connection, content, result, query, 420, 594, 216));
-                query = "SELECT * FROM Manage";
+
+                query = "SELECT specialization FROM Doctor WHERE id = ?";
                 select = connection.prepareStatement(query);
+                select.setInt(1, Integer.parseInt(doctor_id));
+                result = select.executeQuery();
+                String specialization = null;
+                if (result.next()) {
+                    specialization = result.getString("specialization");
+                }
+                query = "SELECT doctor_id FROM Manage WHERE specialization = ?";
+                select = connection.prepareStatement(query);
+                select.setString(1, specialization);
                 result = select.executeQuery();
                 content.add(Create.table(connection, content, result, query, 420, 864, 216));
             } catch (SQLException ex) {

@@ -58,8 +58,9 @@ public class Patient {
     private final JLabel city = Create.label("City", 925, 463);
     private final JLabel dateOfBirth = Create.label("Date of birth", 877, 540);
     private final JLabel streetNumber = Create.label("Street number", 871, 617);
-    private final JLabel buildingNumber = Create.label("Buildingn umber", 867, 694);
+    private final JLabel buildingNumber = Create.label("Buildingn number", 862, 694);
     private final JLabel gender = Create.label("Gender", 911, 771);
+    private final JLabel phoneNumber = Create.label("Phone number", 875, 848);
 
     private JTextField patientID2 = Create.textField(1095, 70);
     private JTextField doctorID2 = Create.textField(1095, 147);
@@ -83,7 +84,8 @@ public class Patient {
     private JTextField buildingNumber2 = Create.textField(1095, 687);
     String[] genders = { "Male", "Female" };
     private JComboBox<String> gender2 = Create.comboBox(genders, 1095, 764);
-    private JTextField message = Create.textField(970, 849);
+    private JTextField phoneNumber2 = Create.textField(1095, 840);
+    private JTextField message = Create.textField(970, 1000);
 
     private JButton confirm = Create.button("Confirm", white, blue, 1107, 926, null);
 
@@ -116,6 +118,8 @@ public class Patient {
         content.add(email2);
         content.add(gender);
         content.add(gender2);
+        content.add(phoneNumber);
+        content.add(phoneNumber2);
         content.add(country);
         content.add(country2);
         content.add(city);
@@ -158,7 +162,7 @@ public class Patient {
                 component.setVisible(false);
             }
 
-            setVisibility(true, firstName, firstName2, lastName, lastName2, patientID, patientID2, email, email2, gender, gender2, country, country2, city, city2, dateOfBirth, year, _1, month, _2, day, streetNumber, streetNumber2, buildingNumber, buildingNumber2, confirm);
+            setVisibility(true, firstName, firstName2, lastName, lastName2, patientID, patientID2, email, email2, gender, gender2, phoneNumber, phoneNumber2, country, country2, city, city2, dateOfBirth, year, _1, month, _2, day, streetNumber, streetNumber2, buildingNumber, buildingNumber2, confirm);
 
             removeAllActionListeners(confirm);
 
@@ -176,6 +180,12 @@ public class Patient {
                     add.setInt(8, Integer.parseInt(streetNumber2.getText()));
                     add.setInt(9, Integer.parseInt(buildingNumber2.getText()));
                     add.setString(10, email2.getText());
+                    add.executeUpdate();
+
+                    query = "INSERT INTO Patient_Phone (patient_id, phone) VALUES (?, ?)";
+                    add = connection.prepareStatement(query);
+                    add.setInt(1, Integer.parseInt(patientID2.getText()));
+                    add.setString(2, phoneNumber2.getText());
                     add.executeUpdate();
 
                     message.setText("The patient has been added successfully.");
@@ -236,17 +246,17 @@ public class Patient {
                     select.setInt(1, Integer.parseInt(patientID2.getText()));
                     result = select.executeQuery();
                     content.add(Create.table(connection, content, result, query, 420, 54, 216));
-                    query = "SELECT * FROM Examine WHERE patient_id = ?"; // patient_id
+                    query = "SELECT doctor_id, date, diagnosis FROM Examine WHERE patient_id = ?";
                     select = connection.prepareStatement(query);
                     select.setInt(1, Integer.parseInt(patientID2.getText()));
                     result = select.executeQuery();
                     content.add(Create.table(connection, content, result, query, 420, 324, 216));
-                    query = "SELECT * FROM Patient_Phone WHERE patient_id = ?"; // patient_id
+                    query = "SELECT phone FROM Patient_Phone WHERE patient_id = ?";
                     select = connection.prepareStatement(query);
                     select.setInt(1, Integer.parseInt(patientID2.getText()));
                     result = select.executeQuery();
                     content.add(Create.table(connection, content, result, query, 420, 594, 216));
-                    query = "SELECT * FROM (SELECT * FROM Perform_operation WHERE patient_id = ?) tmp INNER JOIN Operation_details d ON d.id = tmp.operation_id"; // patient_id
+                    query = "SELECT id, description, date, clinic_id FROM (SELECT doctor_id, operation_id FROM Perform_operation WHERE patient_id = ?) tmp INNER JOIN Operation_details d ON d.id = tmp.operation_id";
                     select = connection.prepareStatement(query);
                     select.setInt(1, Integer.parseInt(patientID2.getText()));
                     result = select.executeQuery();
@@ -271,15 +281,15 @@ public class Patient {
                 select = connection.prepareStatement(query);
                 result = select.executeQuery();
                 content.add(Create.table(connection, content, result, query, 420, 54, 216));
-                query = "SELECT * FROM Examine";
+                query = "SELECT doctor_id, date, diagnosis FROM Examine";
                 select = connection.prepareStatement(query);
                 result = select.executeQuery();
                 content.add(Create.table(connection, content, result, query, 420, 324, 216));
-                query = "SELECT * FROM Patient_Phone";
+                query = "SELECT phone FROM Patient_Phone";
                 select = connection.prepareStatement(query);
                 result = select.executeQuery();
                 content.add(Create.table(connection, content, result, query, 420, 594, 216));
-                query = "SELECT * FROM Perform_operation tmp INNER JOIN Operation_details d ON d.id = tmp.operation_id";
+                query = "SELECT id, description, date, clinic_id FROM (SELECT doctor_id, operation_id FROM Perform_operation) tmp INNER JOIN Operation_details d ON d.id = tmp.operation_id";
                 select = connection.prepareStatement(query);
                 result = select.executeQuery();
                 content.add(Create.table(connection, content, result, query, 420, 864, 216));
